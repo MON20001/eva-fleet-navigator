@@ -1,6 +1,7 @@
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { motion } from "framer-motion";
 import { Bus, Truck, User, Shield, ArrowRight, MapPin, Bell, BarChart3 } from "lucide-react";
+import evaLogo from "@/assets/eva-logo.png";
 import WorkerDashboard from "./WorkerDashboard";
 import BusDriverDashboard from "./BusDriverDashboard";
 import TruckDriverDashboard from "./TruckDriverDashboard";

@@ -6,6 +6,7 @@ import {
   BarChart3, Settings, LogOut, Menu, X, Home, AlertTriangle,
   Navigation, Package, Users, FileText, Clock
 } from "lucide-react";
+import evaLogo from "@/assets/eva-logo.png";
 
 const roleConfig: Record<UserRole, { label: string; icon: React.ElementType; nav: { label: string; icon: React.ElementType; id: string }[] }> = {
   worker: {

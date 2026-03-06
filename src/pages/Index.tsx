@@ -1,6 +1,7 @@
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { motion } from "framer-motion";
 import { Bus, Truck, User, Shield, ArrowRight, MapPin, Bell, BarChart3 } from "lucide-react";
+import evaLogo from "@/assets/eva-logo.png";
 import WorkerDashboard from "./WorkerDashboard";
 import BusDriverDashboard from "./BusDriverDashboard";
 import TruckDriverDashboard from "./TruckDriverDashboard";
@@ -30,9 +31,7 @@ const Landing = () => {
       {/* Header */}
       <header className="relative z-10 flex items-center justify-between px-6 lg:px-12 py-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-            <span className="font-display font-bold text-primary-foreground text-lg">E</span>
-          </div>
+          <img src={evaLogo} alt="EVA Transport" className="h-12 w-auto rounded-lg" />
           <span className="font-display font-bold text-xl">EVA Transport</span>
         </div>
       </header>

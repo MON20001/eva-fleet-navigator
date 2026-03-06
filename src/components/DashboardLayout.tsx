@@ -6,6 +6,7 @@ import {
   BarChart3, Settings, LogOut, Menu, X, Home, AlertTriangle,
   Navigation, Package, Users, FileText, Clock
 } from "lucide-react";
+import evaLogo from "@/assets/eva-logo.png";
 
 const roleConfig: Record<UserRole, { label: string; icon: React.ElementType; nav: { label: string; icon: React.ElementType; id: string }[] }> = {
   worker: {
@@ -93,9 +94,7 @@ const DashboardLayout = ({ children }: Props) => {
       `}>
         {/* Logo */}
         <div className="flex items-center gap-3 px-6 py-5 border-b border-sidebar-border">
-          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-            <span className="font-display font-bold text-primary-foreground text-lg">E</span>
-          </div>
+          <img src={evaLogo} alt="EVA Transport" className="h-10 w-auto rounded-lg" />
           <div>
             <h1 className="font-display font-bold text-lg text-foreground">EVA Transport</h1>
             <p className="text-xs text-muted-foreground">{config.label} Portal</p>

@@ -35,7 +35,6 @@ const Landing = () => {
           <span className="font-display font-bold text-xl">EVA Transport</span>
         </div>
       </header>
-      </header>
 
       {/* Hero */}
       <section className="relative z-10 max-w-5xl mx-auto px-6 pt-12 lg:pt-24 pb-16 text-center">

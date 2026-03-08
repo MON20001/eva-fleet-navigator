@@ -8,6 +8,8 @@ import {
   Users, CheckCircle, ArrowRight, Zap, Eye, Send, Map
 } from "lucide-react";
 import evaLogo from "@/assets/eva-logo.png";
+import ParticleField from "@/components/ParticleField";
+import FloatingShapes from "@/components/FloatingShapes";
 
 /* ── role content ── */
 interface RoleContent {
@@ -261,16 +263,10 @@ const RoleIntroduction = () => {
   const Icon = content.icon;
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-background relative">
-      {/* ── particles ── */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <Particle x="10%" y="20%" size={6} delay={0} />
-        <Particle x="80%" y="15%" size={4} delay={1} />
-        <Particle x="60%" y="60%" size={8} delay={2} />
-        <Particle x="25%" y="70%" size={5} delay={0.5} />
-        <Particle x="90%" y="45%" size={6} delay={1.5} />
-        <Particle x="45%" y="85%" size={4} delay={3} />
-      </div>
+    <div ref={containerRef} className="min-h-screen bg-gradient-mesh relative">
+      <ParticleField count={20} />
+      <FloatingShapes />
+      <div className="fixed inset-0 grid-bg opacity-20 pointer-events-none" />
 
       {/* ── fixed top bar ── */}
       <div className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between" style={{ background: "linear-gradient(180deg, hsl(210 11% 4%), transparent)" }}>
@@ -367,7 +363,7 @@ const RoleIntroduction = () => {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                className="glass-card p-6 group cursor-default"
+                className="glass-card-premium p-6 group cursor-default transition-all duration-500"
               >
                 <div
                   className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
@@ -432,8 +428,8 @@ const RoleIntroduction = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="glass-card p-10 sm:p-16"
-            style={{ boxShadow: "0 0 60px hsl(var(--glow-primary))" }}
+            className="glass-card-premium p-10 sm:p-16"
+            style={{ boxShadow: "0 0 80px hsl(var(--glow-primary-strong))" }}
           >
             <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
               Ready to Get Started?
@@ -445,8 +441,7 @@ const RoleIntroduction = () => {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => navigate("/login")}
-              className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-xl text-sm font-bold tracking-[0.15em] uppercase transition-shadow"
-              style={{ boxShadow: "0 0 30px hsl(var(--glow-primary)), 0 4px 20px hsl(var(--primary) / 0.3)" }}
+              className="btn-premium inline-flex items-center gap-3"
             >
               Continue to Login
               <ArrowRight className="w-5 h-5" />

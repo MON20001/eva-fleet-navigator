@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useMemo } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ParticleFieldProps {
   count?: number;
@@ -7,15 +8,18 @@ interface ParticleFieldProps {
 }
 
 const ParticleField = ({ count = 30, className = "" }: ParticleFieldProps) => {
+  const isMobile = useIsMobile();
+  const actualCount = isMobile ? Math.min(count, 12) : count;
+
   const particles = useMemo(() => 
-    Array.from({ length: count }, (_, i) => ({
+    Array.from({ length: actualCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: Math.random() * 3 + 1,
       duration: Math.random() * 6 + 4,
       delay: Math.random() * 4,
-    })), [count]
+    })), [actualCount]
   );
 
   return (
@@ -34,9 +38,9 @@ const ParticleField = ({ count = 30, className = "" }: ParticleFieldProps) => {
         />
       ))}
 
-      {/* Ambient glow orbs */}
+      {/* Ambient glow orbs - smaller on mobile */}
       <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full"
+        className="absolute w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] rounded-full"
         style={{
           left: '20%', top: '30%',
           background: 'radial-gradient(circle, hsl(43 100% 58% / 0.04) 0%, transparent 70%)',
@@ -45,7 +49,7 @@ const ParticleField = ({ count = 30, className = "" }: ParticleFieldProps) => {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full"
+        className="absolute w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] rounded-full"
         style={{
           right: '10%', bottom: '20%',
           background: 'radial-gradient(circle, hsl(210 60% 40% / 0.03) 0%, transparent 70%)',

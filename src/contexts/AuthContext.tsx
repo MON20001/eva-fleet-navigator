@@ -11,27 +11,35 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  login: (role: UserRole) => void;
+  pendingRole: UserRole | null;
+  setPendingRole: (role: UserRole) => void;
+  login: (name: string, email: string) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const mockUsers: Record<UserRole, User> = {
-  worker: { id: "1", name: "Ahmed Hassan", role: "worker" },
-  "bus-driver": { id: "2", name: "Omar Khalil", role: "bus-driver" },
-  "truck-driver": { id: "3", name: "Youssef Ali", role: "truck-driver" },
-  admin: { id: "4", name: "Sara Mohamed", role: "admin" },
-};
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [pendingRole, setPendingRole] = useState<UserRole | null>(null);
 
-  const login = (role: UserRole) => setUser(mockUsers[role]);
-  const logout = () => setUser(null);
+  const login = (name: string, _email: string) => {
+    if (!pendingRole) return;
+    setUser({
+      id: crypto.randomUUID(),
+      name,
+      role: pendingRole,
+    });
+    setPendingRole(null);
+  };
+
+  const logout = () => {
+    setUser(null);
+    setPendingRole(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, pendingRole, setPendingRole, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

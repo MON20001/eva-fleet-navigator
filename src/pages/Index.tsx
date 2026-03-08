@@ -114,9 +114,9 @@ const Landing = () => {
       </header>
 
       {/* ══════════ HERO ══════════ */}
-      <section className="relative z-10 max-w-6xl mx-auto px-6 pt-16 lg:pt-28 pb-20 text-center">
+      <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 lg:pt-28 pb-16 sm:pb-20 text-center">
         {/* Radial glow behind hero */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-primary/5 blur-[150px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[800px] h-[300px] sm:h-[600px] rounded-full bg-primary/5 blur-[100px] sm:blur-[150px] pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -134,7 +134,7 @@ const Landing = () => {
             Next-Gen Fleet Management
           </motion.p>
 
-          <h1 className="font-display text-5xl sm:text-6xl lg:text-8xl font-bold leading-[1.05] mb-8">
+          <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold leading-[1.05] mb-6 sm:mb-8">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -157,7 +157,7 @@ const Landing = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
-            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
+            className="text-sm sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-2"
           >
             Real-time tracking, intelligent routing, and seamless communication for your entire fleet.
             Powered by precision technology.
@@ -168,7 +168,7 @@ const Landing = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
-            className="flex flex-wrap justify-center gap-8 sm:gap-12 mb-8"
+            className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12 mb-8"
           >
             {stats.map((s, i) => (
               <motion.div
@@ -178,7 +178,7 @@ const Landing = () => {
                 transition={{ delay: 1 + i * 0.1 }}
                 className="text-center"
               >
-                <p className="text-2xl sm:text-3xl font-display font-bold text-gradient">{s.value}</p>
+                <p className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-gradient">{s.value}</p>
                 <p className="text-xs text-muted-foreground mt-1">{s.label}</p>
               </motion.div>
             ))}
@@ -200,10 +200,10 @@ const Landing = () => {
       </section>
 
       {/* ══════════ FEATURES ══════════ */}
-      <RevealSection className="relative z-10 max-w-6xl mx-auto px-6 py-20 sm:py-32">
+      <RevealSection className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-32">
         <div className="text-center mb-16">
           <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Platform Capabilities</p>
-          <h2 className="font-display text-3xl sm:text-5xl font-bold mb-4">Built for the Future</h2>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold mb-4">Built for the Future</h2>
           <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
         </div>
 
@@ -240,10 +240,10 @@ const Landing = () => {
       </RevealSection>
 
       {/* ══════════ ROLE SELECTION ══════════ */}
-      <RevealSection className="relative z-10 max-w-5xl mx-auto px-6 py-20 sm:py-32">
+      <RevealSection className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-32">
         <div className="text-center mb-16">
           <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Get Started</p>
-          <h2 className="font-display text-3xl sm:text-5xl font-bold mb-4">Select Your Role</h2>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold mb-4">Select Your Role</h2>
           <p className="text-muted-foreground max-w-md mx-auto">Choose your role to explore the platform and get started with your personalized experience.</p>
           <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-6" />
         </div>
@@ -262,7 +262,7 @@ const Landing = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleRoleSelect(r.role)}
-                  className="glass-card-premium p-7 text-left w-full group transition-all duration-500 hover:border-primary/40"
+                  className="glass-card-premium p-5 sm:p-7 text-left w-full group transition-all duration-500 hover:border-primary/40 min-h-[44px]"
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <motion.div

@@ -451,7 +451,7 @@ const RoleIntroduction = () => {
               Continue to Login
               <ArrowRight className="w-5 h-5" />
             </motion.button>
-          </motion.button>
+          </motion.div>
         </div>
       </Section>
 

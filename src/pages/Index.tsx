@@ -27,7 +27,7 @@ const Landing = () => {
 
   const handleRoleSelect = (role: UserRole) => {
     setPendingRole(role);
-    navigate("/login");
+    navigate("/intro");
   };
 
   return (

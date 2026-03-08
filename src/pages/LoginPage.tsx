@@ -134,7 +134,7 @@ const LoginPage = () => {
       </div>
 
       {/* ── Right side - Form ── */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-16 relative z-10">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-5 sm:p-8 lg:p-16 relative z-10">
         {/* Success overlay */}
         <AnimatePresence>
           {isSuccess && (
@@ -186,7 +186,7 @@ const LoginPage = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="font-display text-3xl font-bold mb-1"
+              className="font-display text-2xl sm:text-3xl font-bold mb-1"
             >
               {isRegister ? "Create Account" : "Sign In"}
             </motion.h1>
@@ -305,7 +305,7 @@ const LoginPage = () => {
                 disabled={isLoading}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                className="btn-premium w-full flex items-center justify-center gap-3 mt-4 disabled:opacity-70"
+                className="btn-premium w-full flex items-center justify-center gap-3 mt-4 disabled:opacity-70 min-h-[48px]"
               >
                 {isLoading ? (
                   <Loader2 className="w-5 h-5 animate-spin" />

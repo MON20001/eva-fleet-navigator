@@ -47,7 +47,7 @@ interface Props {
   height?: string;
 }
 
-const LiveMap = ({ showWorkers = true, showBuses = true, height = "h-[400px] lg:h-[500px]" }: Props) => {
+const LiveMap = ({ showWorkers = true, showBuses = true, height = "h-[300px] sm:h-[400px] lg:h-[500px]" }: Props) => {
   return (
     <div className={`${height} rounded-xl overflow-hidden border border-border/30 relative`}>
       <MapContainer
@@ -78,7 +78,7 @@ const LiveMap = ({ showWorkers = true, showBuses = true, height = "h-[400px] lg:
         <Polyline positions={routeCoords} pathOptions={{ color: "#ffc528", weight: 3, opacity: 0.7 }} />
       </MapContainer>
       {/* Legend overlay */}
-      <div className="absolute bottom-4 left-4 glass-card p-3 z-[1000] text-xs space-y-1.5">
+      <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 glass-card p-2 sm:p-3 z-[1000] text-xs space-y-1.5">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded bg-primary" />
           <span>Buses</span>

@@ -127,7 +127,7 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
   const vehicleIcon = role === "truck-driver" ? "🚛" : "🚌";
 
   return (
-    <div className="relative w-full h-[300px] sm:h-[400px] rounded-2xl overflow-hidden border border-border/30" style={{ background: "hsla(var(--glass-bg))" }}>
+    <div className="relative w-full h-[250px] sm:h-[300px] md:h-[400px] rounded-2xl overflow-hidden border border-border/30" style={{ background: "hsla(var(--glass-bg))" }}>
       {/* Grid lines */}
       <svg className="absolute inset-0 w-full h-full opacity-10">
         {[...Array(10)].map((_, i) => (
@@ -154,7 +154,7 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
 
       {/* Moving vehicle */}
       <motion.div
-        className="absolute text-3xl"
+        className="absolute text-2xl sm:text-3xl"
         animate={{ x: ["5%", "80%"], y: ["75%", "15%"] }}
         transition={{ duration: 6, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
       >
@@ -285,20 +285,20 @@ const RoleIntroduction = () => {
       {/* ══════════ HERO ══════════ */}
       <motion.section
         style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative min-h-screen flex items-center justify-center px-6 pt-20"
+        className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 pt-20"
       >
         {/* Radial glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] rounded-full bg-primary/5 blur-[80px] sm:blur-[120px] pointer-events-none" />
 
         <div className="relative z-10 max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, type: "spring" }}
-            className="w-20 h-20 rounded-2xl bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto mb-8"
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto mb-6 sm:mb-8"
             style={{ boxShadow: "0 0 40px hsl(var(--glow-primary))" }}
           >
-            <Icon className="w-10 h-10 text-primary" />
+            <Icon className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
           </motion.div>
 
           <motion.p
@@ -314,7 +314,7 @@ const RoleIntroduction = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 whitespace-pre-line"
+            className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 whitespace-pre-line"
           >
             {content.title.split("\n").map((line, i) => (
               <span key={i}>
@@ -346,11 +346,11 @@ const RoleIntroduction = () => {
       </motion.section>
 
       {/* ══════════ FEATURES ══════════ */}
-      <Section className="relative py-20 sm:py-32 px-6">
+      <Section className="relative py-16 sm:py-20 md:py-32 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Features</p>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">Everything You Need</h2>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Everything You Need</h2>
             <div className="w-12 h-0.5 bg-primary mx-auto" />
           </div>
 
@@ -380,11 +380,11 @@ const RoleIntroduction = () => {
       </Section>
 
       {/* ══════════ LIVE DEMO ══════════ */}
-      <Section className="relative py-20 sm:py-32 px-6" delay={0.1}>
+      <Section className="relative py-16 sm:py-20 md:py-32 px-4 sm:px-6" delay={0.1}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Live Preview</p>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">{content.demoTitle}</h2>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">{content.demoTitle}</h2>
             <p className="text-muted-foreground max-w-lg mx-auto">{content.demoDesc}</p>
           </div>
 
@@ -393,11 +393,11 @@ const RoleIntroduction = () => {
       </Section>
 
       {/* ══════════ BENEFITS ══════════ */}
-      <Section className="relative py-20 sm:py-32 px-6" delay={0.1}>
+      <Section className="relative py-16 sm:py-20 md:py-32 px-4 sm:px-6" delay={0.1}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Benefits</p>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">Why EVA Transport?</h2>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Why EVA Transport?</h2>
             <div className="w-12 h-0.5 bg-primary mx-auto" />
           </div>
 
@@ -422,16 +422,16 @@ const RoleIntroduction = () => {
       </Section>
 
       {/* ══════════ CTA ══════════ */}
-      <Section className="relative py-24 sm:py-36 px-6" delay={0.1}>
+      <Section className="relative py-20 sm:py-24 md:py-36 px-4 sm:px-6" delay={0.1}>
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="glass-card-premium p-10 sm:p-16"
+            className="glass-card-premium p-8 sm:p-10 md:p-16"
             style={{ boxShadow: "0 0 80px hsl(var(--glow-primary-strong))" }}
           >
-            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               Ready to Get Started?
             </h2>
             <p className="text-muted-foreground mb-8">

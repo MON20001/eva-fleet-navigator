@@ -110,7 +110,7 @@ const DashboardLayout = ({ children }: Props) => {
             <button
               key={item.id}
               onClick={() => { setActiveTab(item.id); setSidebarOpen(false); }}
-              className={`sidebar-item w-full ${activeTab === item.id ? "active" : ""}`}
+              className={`sidebar-item w-full min-h-[44px] ${activeTab === item.id ? "active" : ""}`}
             >
               <item.icon className="w-5 h-5 shrink-0" />
               <span className="text-sm font-medium">{item.label}</span>
@@ -154,7 +154,7 @@ const DashboardLayout = ({ children }: Props) => {
         </header>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4 lg:p-8">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-8">
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 10 }}

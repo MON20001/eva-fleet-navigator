@@ -78,6 +78,7 @@ const Landing = () => {
 
   const handleRoleSelect = (role: UserRole) => {
     setPendingRole(role);
+    window.scrollTo(0, 0);
     navigate("/intro");
   };
 

@@ -256,6 +256,7 @@ const RoleIntroduction = () => {
 
   useEffect(() => {
     if (!pendingRole) navigate("/");
+    else window.scrollTo(0, 0);
   }, [pendingRole, navigate]);
 
   if (!pendingRole) return null;

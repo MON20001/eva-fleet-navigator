@@ -1,4 +1,5 @@
 import { useAuth, UserRole } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
@@ -6,31 +7,11 @@ import { Bus, Truck, User, Shield, ArrowRight, MapPin, Bell, BarChart3, Route, Z
 import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";
 import FloatingShapes from "@/components/FloatingShapes";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import WorkerDashboard from "./WorkerDashboard";
 import BusDriverDashboard from "./BusDriverDashboard";
 import TruckDriverDashboard from "./TruckDriverDashboard";
 import AdminDashboard from "./AdminDashboard";
-
-const roles: { role: UserRole; label: string; desc: string; icon: React.ElementType; gradient: string }[] = [
-  { role: "worker", label: "Worker", desc: "Track buses & communicate with drivers", icon: User, gradient: "from-primary/20 to-primary/5" },
-  { role: "bus-driver", label: "Bus Driver", desc: "Manage routes & worker pickups", icon: Bus, gradient: "from-primary/20 to-primary/5" },
-  { role: "truck-driver", label: "Truck Driver", desc: "Handle deliveries & logistics", icon: Truck, gradient: "from-primary/20 to-primary/5" },
-  { role: "admin", label: "Supervisor", desc: "Full system control & analytics", icon: Shield, gradient: "from-primary/20 to-primary/5" },
-];
-
-const features = [
-  { icon: MapPin, label: "Real-Time Tracking", desc: "Live GPS positions for your entire fleet updated every second" },
-  { icon: Route, label: "Smart Routing", desc: "AI-optimized routes that save fuel and reduce travel time" },
-  { icon: BarChart3, label: "Advanced Analytics", desc: "Deep insights into fleet performance and efficiency metrics" },
-  { icon: Bell, label: "Instant Alerts", desc: "Real-time notifications for arrivals, delays, and emergencies" },
-];
-
-const stats = [
-  { value: "99.9%", label: "Uptime" },
-  { value: "50K+", label: "Trips Daily" },
-  { value: "<2s", label: "GPS Refresh" },
-  { value: "30%", label: "Cost Savings" },
-];
 
 /* ── Scroll-reveal section ── */
 const RevealSection = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
@@ -74,6 +55,7 @@ const TiltCard = ({ children, className = "" }: { children: React.ReactNode; cla
 
 const Landing = () => {
   const { setPendingRole } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const handleRoleSelect = (role: UserRole) => {
@@ -81,6 +63,27 @@ const Landing = () => {
     window.scrollTo(0, 0);
     navigate("/intro");
   };
+
+  const roles: { role: UserRole; labelKey: "role.worker" | "role.bus" | "role.truck" | "role.admin"; descKey: "role.worker.desc" | "role.bus.desc" | "role.truck.desc" | "role.admin.desc"; icon: React.ElementType; gradient: string }[] = [
+    { role: "worker", labelKey: "role.worker", descKey: "role.worker.desc", icon: User, gradient: "from-primary/20 to-primary/5" },
+    { role: "bus-driver", labelKey: "role.bus", descKey: "role.bus.desc", icon: Bus, gradient: "from-primary/20 to-primary/5" },
+    { role: "truck-driver", labelKey: "role.truck", descKey: "role.truck.desc", icon: Truck, gradient: "from-primary/20 to-primary/5" },
+    { role: "admin", labelKey: "role.admin", descKey: "role.admin.desc", icon: Shield, gradient: "from-primary/20 to-primary/5" },
+  ];
+
+  const features = [
+    { icon: MapPin, labelKey: "feature.tracking" as const, descKey: "feature.tracking.desc" as const },
+    { icon: Route, labelKey: "feature.routing" as const, descKey: "feature.routing.desc" as const },
+    { icon: BarChart3, labelKey: "feature.analytics" as const, descKey: "feature.analytics.desc" as const },
+    { icon: Bell, labelKey: "feature.alerts" as const, descKey: "feature.alerts.desc" as const },
+  ];
+
+  const stats = [
+    { value: "99.9%", labelKey: "stat.uptime" as const },
+    { value: "50K+", labelKey: "stat.trips" as const },
+    { value: "<2s", labelKey: "stat.gps" as const },
+    { value: "30%", labelKey: "stat.savings" as const },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-mesh relative overflow-hidden">
@@ -99,7 +102,7 @@ const Landing = () => {
           className="flex items-center gap-3"
         >
           <img src={evaLogo} alt="EVA Transport" className="h-12 w-auto rounded-lg" />
-          <span className="font-display font-bold text-xl">EVA Transport</span>
+          <span className="font-display font-bold text-xl">{t("eva.transport")}</span>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 20 }}
@@ -109,8 +112,9 @@ const Landing = () => {
         >
           <div className="hidden sm:flex items-center gap-2">
             <div className="pulse-dot" />
-            <span className="text-xs text-muted-foreground">System Online</span>
+            <span className="text-xs text-muted-foreground">{t("system.online")}</span>
           </div>
+          <LanguageSwitcher />
         </motion.div>
       </header>
 
@@ -132,7 +136,7 @@ const Landing = () => {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-xs tracking-[0.2em] uppercase text-primary mb-8"
           >
             <Zap className="w-3 h-3" />
-            Next-Gen Fleet Management
+            {t("hero.badge")}
           </motion.p>
 
           <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold leading-[1.05] mb-6 sm:mb-8">
@@ -142,7 +146,7 @@ const Landing = () => {
               transition={{ delay: 0.3, duration: 0.8 }}
               className="block"
             >
-              Smart Employee
+              {t("hero.line1")}
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 20 }}
@@ -150,7 +154,7 @@ const Landing = () => {
               transition={{ delay: 0.5, duration: 0.8 }}
               className="block text-gradient-wide"
             >
-              Transportation
+              {t("hero.line2")}
             </motion.span>
           </h1>
 
@@ -160,8 +164,7 @@ const Landing = () => {
             transition={{ delay: 0.7 }}
             className="text-sm sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-2"
           >
-            Real-time tracking, intelligent routing, and seamless communication for your entire fleet.
-            Powered by precision technology.
+            {t("hero.desc")}
           </motion.p>
 
           {/* Stats bar */}
@@ -180,7 +183,7 @@ const Landing = () => {
                 className="text-center"
               >
                 <p className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-gradient">{s.value}</p>
-                <p className="text-xs text-muted-foreground mt-1">{s.label}</p>
+                <p className="text-xs text-muted-foreground mt-1">{t(s.labelKey)}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -192,7 +195,7 @@ const Landing = () => {
             transition={{ delay: 1.5 }}
             className="flex flex-col items-center gap-2 text-muted-foreground mt-12"
           >
-            <span className="text-xs tracking-widest uppercase">Explore</span>
+            <span className="text-xs tracking-widest uppercase">{t("hero.explore")}</span>
             <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
               <ChevronDown className="w-5 h-5" />
             </motion.div>
@@ -203,8 +206,8 @@ const Landing = () => {
       {/* ══════════ FEATURES ══════════ */}
       <RevealSection className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-32">
         <div className="text-center mb-16">
-          <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Platform Capabilities</p>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold mb-4">Built for the Future</h2>
+          <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">{t("features.badge")}</p>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold mb-4">{t("features.title")}</h2>
           <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
         </div>
 
@@ -229,8 +232,8 @@ const Landing = () => {
                       <f.icon className="w-7 h-7 text-primary" />
                     </motion.div>
                     <div>
-                      <h3 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors duration-300">{f.label}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+                      <h3 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors duration-300">{t(f.labelKey)}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{t(f.descKey)}</p>
                     </div>
                   </div>
                 </div>
@@ -243,9 +246,9 @@ const Landing = () => {
       {/* ══════════ ROLE SELECTION ══════════ */}
       <RevealSection className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-32">
         <div className="text-center mb-16">
-          <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Get Started</p>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold mb-4">Select Your Role</h2>
-          <p className="text-muted-foreground max-w-md mx-auto">Choose your role to explore the platform and get started with your personalized experience.</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">{t("roles.badge")}</p>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold mb-4">{t("roles.title")}</h2>
+          <p className="text-muted-foreground max-w-md mx-auto">{t("roles.desc")}</p>
           <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-6" />
         </div>
 
@@ -274,10 +277,10 @@ const Landing = () => {
                   >
                     <r.icon className="w-7 h-7 text-primary" />
                   </motion.div>
-                  <h3 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors duration-300">{r.label}</h3>
-                  <p className="text-xs text-muted-foreground mb-5 leading-relaxed">{r.desc}</p>
+                  <h3 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors duration-300">{t(r.labelKey)}</h3>
+                  <p className="text-xs text-muted-foreground mb-5 leading-relaxed">{t(r.descKey)}</p>
                   <div className="flex items-center gap-2 text-primary text-xs font-semibold tracking-wider uppercase opacity-60 group-hover:opacity-100 transition-opacity duration-300">
-                    <span>Enter</span>
+                    <span>{t("role.enter")}</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
                   </div>
                 </motion.button>
@@ -291,10 +294,10 @@ const Landing = () => {
       <footer className="relative z-10 text-center py-10 text-xs text-muted-foreground border-t border-border/30">
         <div className="flex items-center justify-center gap-2 mb-2">
           <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-          <span className="tracking-widest uppercase">EVA Transport</span>
+          <span className="tracking-widest uppercase">{t("footer.eva")}</span>
           <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
         </div>
-        © 2026 All rights reserved. Built with precision.
+        {t("footer.rights")}
       </footer>
     </div>
   );

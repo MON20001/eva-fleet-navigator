@@ -1,4 +1,5 @@
 import { useAuth, UserRole } from "@/contexts/AuthContext";
+import { useLanguage, TranslationKey } from "@/contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
@@ -10,87 +11,88 @@ import {
 import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";
 import FloatingShapes from "@/components/FloatingShapes";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-/* ── role content ── */
+/* ── role content with translation keys ── */
 interface RoleContent {
-  title: string;
-  subtitle: string;
-  heroDesc: string;
+  titleKey: TranslationKey;
+  subtitleKey: TranslationKey;
+  heroDescKey: TranslationKey;
   icon: React.ElementType;
-  features: { icon: React.ElementType; title: string; desc: string }[];
-  demoTitle: string;
-  demoDesc: string;
-  benefits: string[];
+  features: { icon: React.ElementType; titleKey: TranslationKey; descKey: TranslationKey }[];
+  demoTitleKey: TranslationKey;
+  demoDescKey: TranslationKey;
+  benefitKeys: TranslationKey[];
 }
 
 const roleContent: Record<UserRole, RoleContent> = {
   worker: {
-    title: "Your Commute,\nReimagined",
-    subtitle: "Worker Platform",
-    heroDesc: "Track buses in real-time, know exact arrival times, and communicate directly with drivers — all from your phone.",
+    titleKey: "role.worker.title",
+    subtitleKey: "role.worker.subtitle",
+    heroDescKey: "role.worker.heroDesc",
     icon: Users,
     features: [
-      { icon: Map, title: "Live Bus Tracking", desc: "See every bus on an interactive real-time map with GPS accuracy." },
-      { icon: Route, title: "Routes & Arrivals", desc: "Know your bus route, stops, and estimated arrival times instantly." },
-      { icon: MessageSquare, title: "Quick Messages", desc: "Send messages to your driver — request stops or report issues." },
-      { icon: MapPin, title: "Nearby Stop Requests", desc: "Request the driver to stop at the nearest location to you." },
-      { icon: Bell, title: "Smart Notifications", desc: "Get alerts when your bus is approaching or there's a delay." },
-      { icon: AlertTriangle, title: "Report Problems", desc: "Report issues directly and get immediate admin attention." },
+      { icon: Map, titleKey: "role.worker.f1", descKey: "role.worker.f1.desc" },
+      { icon: Route, titleKey: "role.worker.f2", descKey: "role.worker.f2.desc" },
+      { icon: MessageSquare, titleKey: "role.worker.f3", descKey: "role.worker.f3.desc" },
+      { icon: MapPin, titleKey: "role.worker.f4", descKey: "role.worker.f4.desc" },
+      { icon: Bell, titleKey: "role.worker.f5", descKey: "role.worker.f5.desc" },
+      { icon: AlertTriangle, titleKey: "role.worker.f6", descKey: "role.worker.f6.desc" },
     ],
-    demoTitle: "Watch Your Bus Arrive",
-    demoDesc: "The live map shows buses moving in real-time along their routes. Workers at each stop see arrival countdowns and can interact with drivers.",
-    benefits: ["Save 30+ minutes daily with live ETAs", "Never miss your ride with smart alerts", "Direct driver communication", "Instant issue resolution"],
+    demoTitleKey: "role.worker.demo",
+    demoDescKey: "role.worker.demoDesc",
+    benefitKeys: ["role.worker.b1", "role.worker.b2", "role.worker.b3", "role.worker.b4"],
   },
   "bus-driver": {
-    title: "Drive Smarter,\nNot Harder",
-    subtitle: "Bus Driver Platform",
-    heroDesc: "View worker locations, follow optimized routes, manage pickups, and stay connected with your team in real-time.",
+    titleKey: "role.bus.title",
+    subtitleKey: "role.bus.subtitle",
+    heroDescKey: "role.bus.heroDesc",
     icon: Bus,
     features: [
-      { icon: Eye, title: "Worker Locations", desc: "See all workers waiting at assigned pickup points on your route." },
-      { icon: Route, title: "Optimized Routes", desc: "Follow AI-optimized routes that minimize travel time and fuel." },
-      { icon: Clock, title: "Pickup Schedules", desc: "Manage your pickup schedule with real-time adjustments." },
-      { icon: AlertTriangle, title: "Status Updates", desc: "Notify workers and admin about traffic delays or breakdowns." },
-      { icon: MessageSquare, title: "Team Communication", desc: "Chat with workers and supervisors directly from the app." },
-      { icon: Navigation, title: "Turn-by-Turn Nav", desc: "Built-in navigation with route guidance and live traffic." },
+      { icon: Eye, titleKey: "role.bus.f1", descKey: "role.bus.f1.desc" },
+      { icon: Route, titleKey: "role.bus.f2", descKey: "role.bus.f2.desc" },
+      { icon: Clock, titleKey: "role.bus.f3", descKey: "role.bus.f3.desc" },
+      { icon: AlertTriangle, titleKey: "role.bus.f4", descKey: "role.bus.f4.desc" },
+      { icon: MessageSquare, titleKey: "role.bus.f5", descKey: "role.bus.f5.desc" },
+      { icon: Navigation, titleKey: "role.bus.f6", descKey: "role.bus.f6.desc" },
     ],
-    demoTitle: "Your Route, Your Dashboard",
-    demoDesc: "Watch as worker markers appear along your route. Status updates flow in real-time, and your schedule adapts dynamically to conditions.",
-    benefits: ["Reduce route time by 25%", "Zero missed pickups", "Instant admin support", "Stress-free driving experience"],
+    demoTitleKey: "role.bus.demo",
+    demoDescKey: "role.bus.demoDesc",
+    benefitKeys: ["role.bus.b1", "role.bus.b2", "role.bus.b3", "role.bus.b4"],
   },
   "truck-driver": {
-    title: "Deliver With\nConfidence",
-    subtitle: "Truck Driver Platform",
-    heroDesc: "Follow delivery routes, update statuses in real-time, report issues, and keep the logistics chain running smoothly.",
+    titleKey: "role.truck.title",
+    subtitleKey: "role.truck.subtitle",
+    heroDescKey: "role.truck.heroDesc",
     icon: Truck,
     features: [
-      { icon: Route, title: "Delivery Routes", desc: "Optimized delivery routes with multiple checkpoint support." },
-      { icon: CheckCircle, title: "Status Updates", desc: "Update delivery status at each checkpoint with one tap." },
-      { icon: AlertTriangle, title: "Traffic Reports", desc: "Report road conditions and traffic to help reroute logistics." },
-      { icon: MessageSquare, title: "Admin Communication", desc: "Direct line to supervisors for urgent delivery decisions." },
-      { icon: Package, title: "Cargo Tracking", desc: "Track cargo details, quantities, and delivery requirements." },
-      { icon: Navigation, title: "Route Guidance", desc: "GPS navigation optimized for truck-specific road restrictions." },
+      { icon: Route, titleKey: "role.truck.f1", descKey: "role.truck.f1.desc" },
+      { icon: CheckCircle, titleKey: "role.truck.f2", descKey: "role.truck.f2.desc" },
+      { icon: AlertTriangle, titleKey: "role.truck.f3", descKey: "role.truck.f3.desc" },
+      { icon: MessageSquare, titleKey: "role.truck.f4", descKey: "role.truck.f4.desc" },
+      { icon: Package, titleKey: "role.truck.f5", descKey: "role.truck.f5.desc" },
+      { icon: Navigation, titleKey: "role.truck.f6", descKey: "role.truck.f6.desc" },
     ],
-    demoTitle: "Track Every Delivery",
-    demoDesc: "See your truck moving along logistics routes with delivery checkpoints lighting up as you progress. Cargo status updates flow in real-time.",
-    benefits: ["On-time delivery rate 98%+", "Fewer route deviations", "Instant issue escalation", "Complete cargo visibility"],
+    demoTitleKey: "role.truck.demo",
+    demoDescKey: "role.truck.demoDesc",
+    benefitKeys: ["role.truck.b1", "role.truck.b2", "role.truck.b3", "role.truck.b4"],
   },
   admin: {
-    title: "Command Your\nEntire Fleet",
-    subtitle: "Supervisor Platform",
-    heroDesc: "Full visibility over every bus, truck, driver, and worker. Analytics, communications, and control — all in one dashboard.",
+    titleKey: "role.admin.title",
+    subtitleKey: "role.admin.subtitle",
+    heroDescKey: "role.admin.heroDesc",
     icon: Shield,
     features: [
-      { icon: Map, title: "Fleet Overview", desc: "See every vehicle on a live map with real-time status indicators." },
-      { icon: BarChart3, title: "Analytics Dashboard", desc: "Performance metrics, route efficiency, and operational insights." },
-      { icon: Users, title: "Team Management", desc: "Manage drivers, workers, routes, and schedules from one place." },
-      { icon: Bell, title: "Alert Center", desc: "Receive and manage all alerts, reports, and notifications." },
-      { icon: MessageSquare, title: "Broadcast Messages", desc: "Send messages to individuals, groups, or the entire fleet." },
-      { icon: Zap, title: "Quick Actions", desc: "Reassign routes, respond to emergencies, and approve requests." },
+      { icon: Map, titleKey: "role.admin.f1", descKey: "role.admin.f1.desc" },
+      { icon: BarChart3, titleKey: "role.admin.f2", descKey: "role.admin.f2.desc" },
+      { icon: Users, titleKey: "role.admin.f3", descKey: "role.admin.f3.desc" },
+      { icon: Bell, titleKey: "role.admin.f4", descKey: "role.admin.f4.desc" },
+      { icon: MessageSquare, titleKey: "role.admin.f5", descKey: "role.admin.f5.desc" },
+      { icon: Zap, titleKey: "role.admin.f6", descKey: "role.admin.f6.desc" },
     ],
-    demoTitle: "Your Fleet at a Glance",
-    demoDesc: "The command center shows every vehicle, worker, and route in real-time. Drill into any metric, communicate with anyone, and make decisions instantly.",
-    benefits: ["100% fleet visibility", "50% faster incident response", "Data-driven decisions", "Unified communication hub"],
+    demoTitleKey: "role.admin.demo",
+    demoDescKey: "role.admin.demoDesc",
+    benefitKeys: ["role.admin.b1", "role.admin.b2", "role.admin.b3", "role.admin.b4"],
   },
 };
 
@@ -111,24 +113,14 @@ const Section = ({ children, className = "", delay = 0 }: { children: React.Reac
   );
 };
 
-/* ── floating particle ── */
-const Particle = ({ x, y, size, delay }: { x: string; y: string; size: number; delay: number }) => (
-  <motion.div
-    className="absolute rounded-full bg-primary/20"
-    style={{ left: x, top: y, width: size, height: size }}
-    animate={{ y: [0, -20, 0], opacity: [0.2, 0.6, 0.2] }}
-    transition={{ duration: 4 + delay, repeat: Infinity, delay }}
-  />
-);
-
 /* ── animated map visualization ── */
 const MapVisualization = ({ role }: { role: UserRole }) => {
+  const { t } = useLanguage();
   const isWorker = role === "worker" || role === "bus-driver";
   const vehicleIcon = role === "truck-driver" ? "🚛" : "🚌";
 
   return (
     <div className="relative w-full h-[250px] sm:h-[300px] md:h-[400px] rounded-2xl overflow-hidden border border-border/30" style={{ background: "hsla(var(--glass-bg))" }}>
-      {/* Grid lines */}
       <svg className="absolute inset-0 w-full h-full opacity-10">
         {[...Array(10)].map((_, i) => (
           <line key={`h${i}`} x1="0" y1={`${i * 10}%`} x2="100%" y2={`${i * 10}%`} stroke="hsl(var(--primary))" strokeWidth="0.5" />
@@ -138,7 +130,6 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
         ))}
       </svg>
 
-      {/* Route line */}
       <svg className="absolute inset-0 w-full h-full">
         <motion.path
           d="M 10% 80% Q 30% 50%, 50% 45% T 90% 20%"
@@ -152,7 +143,6 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
         />
       </svg>
 
-      {/* Moving vehicle */}
       <motion.div
         className="absolute text-2xl sm:text-3xl"
         animate={{ x: ["5%", "80%"], y: ["75%", "15%"] }}
@@ -161,7 +151,6 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
         {vehicleIcon}
       </motion.div>
 
-      {/* Worker/stop markers */}
       {isWorker && (
         <>
           {[
@@ -178,19 +167,18 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
               transition={{ delay: m.delay, duration: 0.5, type: "spring" }}
             >
               <div className="w-3 h-3 rounded-full bg-primary shadow-[0_0_12px_hsl(var(--primary))]" />
-              <span className="text-[10px] text-primary/70 mt-1">Stop {i + 1}</span>
+              <span className="text-[10px] text-primary/70 mt-1">{t("map.stop")} {i + 1}</span>
             </motion.div>
           ))}
         </>
       )}
 
-      {/* Checkpoint markers for truck */}
       {role === "truck-driver" && (
         <>
           {[
-            { left: "20%", top: "65%", label: "Pickup" },
-            { left: "50%", top: "42%", label: "Checkpoint" },
-            { left: "78%", top: "22%", label: "Delivery" },
+            { left: "20%", top: "65%", labelKey: "map.pickup" as TranslationKey },
+            { left: "50%", top: "42%", labelKey: "map.checkpoint" as TranslationKey },
+            { left: "78%", top: "22%", labelKey: "map.delivery" as TranslationKey },
           ].map((m, i) => (
             <motion.div
               key={i}
@@ -201,13 +189,12 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
               transition={{ delay: 1 + i * 0.4, duration: 0.5, type: "spring" }}
             >
               <div className="w-4 h-4 rounded-sm bg-primary/80 border border-primary shadow-[0_0_12px_hsl(var(--primary))]" />
-              <span className="text-[10px] text-primary/70 mt-1">{m.label}</span>
+              <span className="text-[10px] text-primary/70 mt-1">{t(m.labelKey)}</span>
             </motion.div>
           ))}
         </>
       )}
 
-      {/* Admin fleet dots */}
       {role === "admin" && (
         <>
           {[
@@ -231,7 +218,6 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
         </>
       )}
 
-      {/* Notification popup */}
       <motion.div
         className="absolute right-4 top-4 glass-card px-3 py-2 flex items-center gap-2"
         initial={{ opacity: 0, x: 30 }}
@@ -239,7 +225,7 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
         transition={{ duration: 4, delay: 2, repeat: Infinity, repeatDelay: 3 }}
       >
         <Bell className="w-3 h-3 text-primary" />
-        <span className="text-xs text-foreground/80">Bus arriving in 2 min</span>
+        <span className="text-xs text-foreground/80">{t("intro.notification")}</span>
       </motion.div>
     </div>
   );
@@ -248,6 +234,7 @@ const MapVisualization = ({ role }: { role: UserRole }) => {
 /* ── main page ── */
 const RoleIntroduction = () => {
   const { pendingRole } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
@@ -273,14 +260,17 @@ const RoleIntroduction = () => {
       <div className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between" style={{ background: "linear-gradient(180deg, hsl(210 11% 4%), transparent)" }}>
         <div className="flex items-center gap-3">
           <img src={evaLogo} alt="EVA" className="h-10 w-auto rounded-lg" />
-          <span className="font-display font-bold text-sm hidden sm:block">EVA Transport</span>
+          <span className="font-display font-bold text-sm hidden sm:block">{t("eva.transport")}</span>
         </div>
-        <button
-          onClick={() => navigate("/login")}
-          className="text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-primary transition-colors"
-        >
-          Skip to Login →
-        </button>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <button
+            onClick={() => navigate("/login")}
+            className="text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-primary transition-colors"
+          >
+            {t("intro.skip")}
+          </button>
+        </div>
       </div>
 
       {/* ══════════ HERO ══════════ */}
@@ -288,7 +278,6 @@ const RoleIntroduction = () => {
         style={{ opacity: heroOpacity, scale: heroScale }}
         className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 pt-20"
       >
-        {/* Radial glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] rounded-full bg-primary/5 blur-[80px] sm:blur-[120px] pointer-events-none" />
 
         <div className="relative z-10 max-w-3xl mx-auto text-center">
@@ -308,7 +297,7 @@ const RoleIntroduction = () => {
             transition={{ delay: 0.2 }}
             className="text-xs tracking-[0.3em] uppercase text-primary mb-4"
           >
-            {content.subtitle}
+            {t(content.subtitleKey)}
           </motion.p>
 
           <motion.h1
@@ -317,7 +306,7 @@ const RoleIntroduction = () => {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 whitespace-pre-line"
           >
-            {content.title.split("\n").map((line, i) => (
+            {t(content.titleKey).split("\n").map((line, i) => (
               <span key={i}>
                 {i === 1 ? <span className="text-gradient">{line}</span> : line}
                 {i === 0 && <br />}
@@ -331,7 +320,7 @@ const RoleIntroduction = () => {
             transition={{ delay: 0.6 }}
             className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-10 leading-relaxed"
           >
-            {content.heroDesc}
+            {t(content.heroDescKey)}
           </motion.p>
 
           <motion.div
@@ -340,7 +329,7 @@ const RoleIntroduction = () => {
             transition={{ delay: 0.8 }}
             className="flex items-center justify-center gap-2 text-muted-foreground text-sm animate-bounce"
           >
-            <span>Scroll to explore</span>
+            <span>{t("intro.scroll")}</span>
             <ArrowRight className="w-4 h-4 rotate-90" />
           </motion.div>
         </div>
@@ -350,8 +339,8 @@ const RoleIntroduction = () => {
       <Section className="relative py-16 sm:py-20 md:py-32 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Features</p>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Everything You Need</h2>
+            <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">{t("intro.features")}</p>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">{t("intro.features.title")}</h2>
             <div className="w-12 h-0.5 bg-primary mx-auto" />
           </div>
 
@@ -372,8 +361,8 @@ const RoleIntroduction = () => {
                 >
                   <f.icon className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="font-display font-semibold text-lg mb-2">{f.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+                <h3 className="font-display font-semibold text-lg mb-2">{t(f.titleKey)}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{t(f.descKey)}</p>
               </motion.div>
             ))}
           </div>
@@ -384,9 +373,9 @@ const RoleIntroduction = () => {
       <Section className="relative py-16 sm:py-20 md:py-32 px-4 sm:px-6" delay={0.1}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Live Preview</p>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">{content.demoTitle}</h2>
-            <p className="text-muted-foreground max-w-lg mx-auto">{content.demoDesc}</p>
+            <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">{t("intro.preview")}</p>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">{t(content.demoTitleKey)}</h2>
+            <p className="text-muted-foreground max-w-lg mx-auto">{t(content.demoDescKey)}</p>
           </div>
 
           <MapVisualization role={pendingRole} />
@@ -397,13 +386,13 @@ const RoleIntroduction = () => {
       <Section className="relative py-16 sm:py-20 md:py-32 px-4 sm:px-6" delay={0.1}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">Benefits</p>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Why EVA Transport?</h2>
+            <p className="text-xs tracking-[0.3em] uppercase text-primary mb-3">{t("intro.benefits")}</p>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">{t("intro.benefits.title")}</h2>
             <div className="w-12 h-0.5 bg-primary mx-auto" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {content.benefits.map((b, i) => (
+            {content.benefitKeys.map((bKey, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
@@ -415,7 +404,7 @@ const RoleIntroduction = () => {
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <CheckCircle className="w-5 h-5 text-primary" />
                 </div>
-                <p className="font-display font-medium">{b}</p>
+                <p className="font-display font-medium">{t(bKey)}</p>
               </motion.div>
             ))}
           </div>
@@ -433,10 +422,10 @@ const RoleIntroduction = () => {
             style={{ boxShadow: "0 0 80px hsl(var(--glow-primary-strong))" }}
           >
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-              Ready to Get Started?
+              {t("intro.cta.title")}
             </h2>
             <p className="text-muted-foreground mb-8">
-              Sign in or create your account to access your personalized dashboard.
+              {t("intro.cta.desc")}
             </p>
             <motion.button
               whileHover={{ scale: 1.03 }}
@@ -444,7 +433,7 @@ const RoleIntroduction = () => {
               onClick={() => navigate("/login")}
               className="btn-premium inline-flex items-center gap-3"
             >
-              Continue to Login
+              {t("intro.cta.button")}
               <ArrowRight className="w-5 h-5" />
             </motion.button>
           </motion.div>
@@ -453,7 +442,7 @@ const RoleIntroduction = () => {
 
       {/* ── footer ── */}
       <footer className="relative z-10 text-center py-8 text-xs text-muted-foreground border-t border-border/30">
-        © 2026 EVA Transport. All rights reserved.
+        {t("footer.copyright")}
       </footer>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
+import { useLanguage, TranslationKey } from "@/contexts/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Bus, Truck, User, Shield, MapPin, MessageSquare, Bell,
@@ -7,52 +8,53 @@ import {
   Navigation, Package, Users, FileText, Clock
 } from "lucide-react";
 import evaLogo from "@/assets/eva-logo.png";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-const roleConfig: Record<UserRole, { label: string; icon: React.ElementType; nav: { label: string; icon: React.ElementType; id: string }[] }> = {
+const roleConfig: Record<UserRole, { labelKey: TranslationKey; icon: React.ElementType; nav: { labelKey: TranslationKey; icon: React.ElementType; id: string }[] }> = {
   worker: {
-    label: "Worker",
+    labelKey: "role.worker",
     icon: User,
     nav: [
-      { label: "Dashboard", icon: Home, id: "dashboard" },
-      { label: "Live Map", icon: MapPin, id: "map" },
-      { label: "Messages", icon: MessageSquare, id: "messages" },
-      { label: "Notifications", icon: Bell, id: "notifications" },
-      { label: "Report Issue", icon: AlertTriangle, id: "report" },
+      { labelKey: "nav.dashboard", icon: Home, id: "dashboard" },
+      { labelKey: "nav.map", icon: MapPin, id: "map" },
+      { labelKey: "nav.messages", icon: MessageSquare, id: "messages" },
+      { labelKey: "nav.notifications", icon: Bell, id: "notifications" },
+      { labelKey: "nav.report", icon: AlertTriangle, id: "report" },
     ],
   },
   "bus-driver": {
-    label: "Bus Driver",
+    labelKey: "role.bus",
     icon: Bus,
     nav: [
-      { label: "Dashboard", icon: Home, id: "dashboard" },
-      { label: "Route Map", icon: Navigation, id: "map" },
-      { label: "Workers", icon: Users, id: "workers" },
-      { label: "Status Update", icon: Clock, id: "status" },
-      { label: "Messages", icon: MessageSquare, id: "messages" },
+      { labelKey: "nav.dashboard", icon: Home, id: "dashboard" },
+      { labelKey: "nav.routemap", icon: Navigation, id: "map" },
+      { labelKey: "nav.workers", icon: Users, id: "workers" },
+      { labelKey: "nav.status", icon: Clock, id: "status" },
+      { labelKey: "nav.messages", icon: MessageSquare, id: "messages" },
     ],
   },
   "truck-driver": {
-    label: "Truck Driver",
+    labelKey: "role.truck",
     icon: Truck,
     nav: [
-      { label: "Dashboard", icon: Home, id: "dashboard" },
-      { label: "Deliveries", icon: Package, id: "deliveries" },
-      { label: "Route Map", icon: Navigation, id: "map" },
-      { label: "Reports", icon: FileText, id: "reports" },
-      { label: "Messages", icon: MessageSquare, id: "messages" },
+      { labelKey: "nav.dashboard", icon: Home, id: "dashboard" },
+      { labelKey: "nav.deliveries", icon: Package, id: "deliveries" },
+      { labelKey: "nav.routemap", icon: Navigation, id: "map" },
+      { labelKey: "nav.reports", icon: FileText, id: "reports" },
+      { labelKey: "nav.messages", icon: MessageSquare, id: "messages" },
     ],
   },
   admin: {
-    label: "Admin",
+    labelKey: "role.admin",
     icon: Shield,
     nav: [
-      { label: "Dashboard", icon: Home, id: "dashboard" },
-      { label: "Live Tracking", icon: MapPin, id: "map" },
-      { label: "Users", icon: Users, id: "users" },
-      { label: "Analytics", icon: BarChart3, id: "analytics" },
-      { label: "Reports", icon: FileText, id: "reports" },
-      { label: "Notifications", icon: Bell, id: "notifications" },
-      { label: "Settings", icon: Settings, id: "settings" },
+      { labelKey: "nav.dashboard", icon: Home, id: "dashboard" },
+      { labelKey: "nav.tracking", icon: MapPin, id: "map" },
+      { labelKey: "nav.users", icon: Users, id: "users" },
+      { labelKey: "nav.analytics", icon: BarChart3, id: "analytics" },
+      { labelKey: "nav.reports", icon: FileText, id: "reports" },
+      { labelKey: "nav.notifications", icon: Bell, id: "notifications" },
+      { labelKey: "nav.settings", icon: Settings, id: "settings" },
     ],
   },
 };
@@ -63,6 +65,7 @@ interface Props {
 
 const DashboardLayout = ({ children }: Props) => {
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -96,8 +99,8 @@ const DashboardLayout = ({ children }: Props) => {
         <div className="flex items-center gap-3 px-6 py-5 border-b border-sidebar-border">
           <img src={evaLogo} alt="EVA Transport" className="h-10 w-auto rounded-lg" />
           <div>
-            <h1 className="font-display font-bold text-lg text-foreground">EVA Transport</h1>
-            <p className="text-xs text-muted-foreground">{config.label} Portal</p>
+            <h1 className="font-display font-bold text-lg text-foreground">{t("eva.transport")}</h1>
+            <p className="text-xs text-muted-foreground">{t(config.labelKey)} {t("dash.portal")}</p>
           </div>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden ml-auto text-muted-foreground">
             <X className="w-5 h-5" />
@@ -113,10 +116,15 @@ const DashboardLayout = ({ children }: Props) => {
               className={`sidebar-item w-full min-h-[44px] ${activeTab === item.id ? "active" : ""}`}
             >
               <item.icon className="w-5 h-5 shrink-0" />
-              <span className="text-sm font-medium">{item.label}</span>
+              <span className="text-sm font-medium">{t(item.labelKey)}</span>
             </button>
           ))}
         </nav>
+
+        {/* Language switcher in sidebar */}
+        <div className="px-4 py-2">
+          <LanguageSwitcher className="w-full justify-center" />
+        </div>
 
         {/* User */}
         <div className="px-4 py-4 border-t border-sidebar-border">
@@ -126,7 +134,7 @@ const DashboardLayout = ({ children }: Props) => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{user.name}</p>
-              <p className="text-xs text-muted-foreground">{config.label}</p>
+              <p className="text-xs text-muted-foreground">{t(config.labelKey)}</p>
             </div>
             <button onClick={logout} className="text-muted-foreground hover:text-destructive transition-colors">
               <LogOut className="w-4 h-4" />
@@ -143,7 +151,7 @@ const DashboardLayout = ({ children }: Props) => {
             <Menu className="w-6 h-6" />
           </button>
           <h2 className="font-display font-semibold text-lg">
-            {config.nav.find((n) => n.id === activeTab)?.label || "Dashboard"}
+            {t(config.nav.find((n) => n.id === activeTab)?.labelKey || "nav.dashboard")}
           </h2>
           <div className="ml-auto flex items-center gap-3">
             <button className="relative p-2 rounded-lg hover:bg-secondary transition-colors">

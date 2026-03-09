@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Mail, Lock, UserIcon, Eye, EyeOff, CheckCircle, Loader2 } from "lucide-react";
 import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-const roleLabelMap: Record<string, string> = {
-  worker: "Worker",
-  "bus-driver": "Bus Driver",
-  "truck-driver": "Truck Driver",
-  admin: "Supervisor",
+const roleLabelKeys: Record<string, "role.worker" | "role.bus" | "role.truck" | "role.admin"> = {
+  worker: "role.worker",
+  "bus-driver": "role.bus",
+  "truck-driver": "role.truck",
+  admin: "role.admin",
 };
 
 const LoginPage = () => {
   const { pendingRole, login } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
   const [name, setName] = useState("");
@@ -36,25 +39,23 @@ const LoginPage = () => {
     setError("");
 
     if (!email || !password) {
-      setError("Please fill in all required fields.");
+      setError(t("login.error.fields"));
       return;
     }
     if (isRegister && !name) {
-      setError("Please enter your full name.");
+      setError(t("login.error.name"));
       return;
     }
     if (isRegister && password !== confirmPassword) {
-      setError("Passwords do not match.");
+      setError(t("login.error.password"));
       return;
     }
 
     setIsLoading(true);
-    // Simulate network delay
     await new Promise((r) => setTimeout(r, 1200));
     setIsLoading(false);
     setIsSuccess(true);
 
-    // Show success state briefly, then redirect
     await new Promise((r) => setTimeout(r, 800));
     login(isRegister ? name : email.split("@")[0], email);
     navigate("/");
@@ -84,7 +85,6 @@ const LoginPage = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-background" />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/40" />
 
-        {/* Animated glow */}
         <motion.div
           className="absolute w-[500px] h-[500px] rounded-full"
           style={{
@@ -95,7 +95,6 @@ const LoginPage = () => {
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        {/* Logo */}
         <div className="absolute top-8 left-8 z-10">
           <motion.img
             initial={{ opacity: 0, y: -10 }}
@@ -106,7 +105,6 @@ const LoginPage = () => {
           />
         </div>
 
-        {/* Text overlay */}
         <div className="relative z-10 flex flex-col justify-end p-12 pb-20">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -115,27 +113,29 @@ const LoginPage = () => {
           >
             <div className="w-12 h-0.5 bg-primary mb-6" />
             <h2 className="font-display text-4xl font-bold leading-tight mb-4">
-              Excellence in<br />
-              <span className="text-gradient-wide italic">Transportation</span>
+              {t("login.visual.title1")}<br />
+              <span className="text-gradient-wide italic">{t("login.visual.title2")}</span>
             </h2>
             <p className="text-muted-foreground text-sm max-w-sm leading-relaxed">
-              Managing the world's finest fleet operations with precision,
-              reliability, and uncompromising standards of service.
+              {t("login.visual.desc")}
             </p>
           </motion.div>
         </div>
 
-        {/* Footer */}
         <div className="absolute bottom-8 left-12 z-10">
           <p className="text-xs text-muted-foreground tracking-widest uppercase">
-            © 2026 EVA Transportation Group
+            {t("login.visual.footer")}
           </p>
         </div>
       </div>
 
       {/* ── Right side - Form ── */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-5 sm:p-8 lg:p-16 relative z-10">
-        {/* Success overlay */}
+        {/* Language switcher */}
+        <div className="absolute top-5 end-5 z-20">
+          <LanguageSwitcher />
+        </div>
+
         <AnimatePresence>
           {isSuccess && (
             <motion.div
@@ -152,8 +152,8 @@ const LoginPage = () => {
                 <div className="w-20 h-20 rounded-full bg-success/10 border border-success/30 flex items-center justify-center" style={{ boxShadow: "0 0 40px hsl(142 71% 45% / 0.2)" }}>
                   <CheckCircle className="w-10 h-10 text-success" />
                 </div>
-                <p className="font-display font-semibold text-lg">Welcome aboard!</p>
-                <p className="text-sm text-muted-foreground">Redirecting to your dashboard...</p>
+                <p className="font-display font-semibold text-lg">{t("login.success.title")}</p>
+                <p className="text-sm text-muted-foreground">{t("login.success.desc")}</p>
               </motion.div>
             </motion.div>
           )}
@@ -168,7 +168,7 @@ const LoginPage = () => {
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-3 mb-10">
             <img src={evaLogo} alt="EVA Transport" className="h-10 w-auto rounded-lg" />
-            <span className="font-display font-bold text-lg">EVA Transport</span>
+            <span className="font-display font-bold text-lg">{t("eva.transport")}</span>
           </div>
 
           <motion.p
@@ -177,7 +177,7 @@ const LoginPage = () => {
             transition={{ delay: 0.2 }}
             className="text-xs tracking-[0.25em] uppercase text-muted-foreground mb-2"
           >
-            Welcome back
+            {t("login.welcome")}
           </motion.p>
 
           <AnimatePresence mode="wait">
@@ -188,7 +188,7 @@ const LoginPage = () => {
               exit={{ opacity: 0, y: -10 }}
               className="font-display text-2xl sm:text-3xl font-bold mb-1"
             >
-              {isRegister ? "Create Account" : "Sign In"}
+              {isRegister ? t("login.create") : t("login.signin")}
             </motion.h1>
           </AnimatePresence>
 
@@ -201,10 +201,10 @@ const LoginPage = () => {
             transition={{ delay: 0.3 }}
             className="mb-8"
           >
-            <p className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2">Your Role</p>
+            <p className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2">{t("login.role")}</p>
             <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/5" style={{ boxShadow: "0 0 20px hsl(var(--glow-primary))" }}>
               <div className="w-2 h-2 rounded-full bg-primary animate-glow-pulse" />
-              <span className="text-sm font-medium text-primary">{roleLabelMap[pendingRole]}</span>
+              <span className="text-sm font-medium text-primary">{t(roleLabelKeys[pendingRole])}</span>
             </div>
           </motion.div>
 
@@ -222,12 +222,12 @@ const LoginPage = () => {
             >
               {isRegister && (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                  <label className="block text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3">Full Name</label>
+                  <label className="block text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3">{t("login.name")}</label>
                   <div className="relative group">
                     <UserIcon className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                     <input
                       type="text"
-                      placeholder="Your full name"
+                      placeholder={t("login.name.placeholder")}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="w-full bg-transparent border-b border-border pl-7 pb-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-all duration-300 input-glow"
@@ -237,12 +237,12 @@ const LoginPage = () => {
               )}
 
               <div>
-                <label className="block text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3">Email Address</label>
+                <label className="block text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3">{t("login.email")}</label>
                 <div className="relative group">
                   <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                   <input
                     type="email"
-                    placeholder="name@company.com"
+                    placeholder={t("login.email.placeholder")}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full bg-transparent border-b border-border pl-7 pb-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-all duration-300 input-glow"
@@ -251,7 +251,7 @@ const LoginPage = () => {
               </div>
 
               <div>
-                <label className="block text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3">Password</label>
+                <label className="block text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3">{t("login.password")}</label>
                 <div className="relative group">
                   <Lock className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                   <input
@@ -273,7 +273,7 @@ const LoginPage = () => {
 
               {isRegister && (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                  <label className="block text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3">Confirm Password</label>
+                  <label className="block text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3">{t("login.confirm")}</label>
                   <div className="relative group">
                     <Lock className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                     <input
@@ -311,7 +311,7 @@ const LoginPage = () => {
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   <>
-                    {isRegister ? "Create Account" : "Sign In"}
+                    {isRegister ? t("login.submit.create") : t("login.submit.signin")}
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -325,28 +325,26 @@ const LoginPage = () => {
               onClick={toggleMode}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
             >
-              {isRegister ? "Already have an account? " : "Don't have an account? "}
+              {isRegister ? t("login.has.account") : t("login.no.account")}
               <span className="text-primary hover:underline font-medium">
-                {isRegister ? "Sign in" : "Create one"}
+                {isRegister ? t("login.switch.signin") : t("login.switch.create")}
               </span>
             </button>
           </div>
 
-          {/* Back link */}
           <div className="mt-6">
             <button
               type="button"
               onClick={() => navigate("/")}
               className="text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors"
             >
-              ← Back to role selection
+              {t("login.back")}
             </button>
           </div>
 
-          {/* Desktop footer */}
           <div className="hidden lg:block mt-16">
             <p className="text-xs text-muted-foreground/50 tracking-widest uppercase">
-              Fleet Management System
+              {t("fleet.system")}
             </p>
           </div>
         </motion.div>

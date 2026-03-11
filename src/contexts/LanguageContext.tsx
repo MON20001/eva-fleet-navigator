@@ -344,8 +344,14 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+const defaultContext: LanguageContextType = {
+  language: "en",
+  setLanguage: () => {},
+  t: (key: TranslationKey) => translations[key]?.en ?? key,
+  dir: "ltr" as const,
+};
+
 export const useLanguage = () => {
   const ctx = useContext(LanguageContext);
-  if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
-  return ctx;
+  return ctx ?? defaultContext;
 };

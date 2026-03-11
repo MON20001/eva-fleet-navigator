@@ -9,18 +9,14 @@ const translations = {
   "footer.rights": { en: "© 2026 All rights reserved. Built with precision.", ar: "© 2026 جميع الحقوق محفوظة. صُمم بدقة." },
   "footer.eva": { en: "EVA Transport", ar: "إيفا للنقل" },
   "footer.copyright": { en: "© 2026 EVA Transport. All rights reserved.", ar: "© 2026 إيفا للنقل. جميع الحقوق محفوظة." },
-  "footer.privacy": { en: "Privacy Policy", ar: "سياسة الخصوصية" },
-  "footer.terms": { en: "Terms of Service", ar: "شروط الخدمة" },
   "fleet.system": { en: "Fleet Management System", ar: "نظام إدارة الأسطول" },
 
   // ── Hero ──
-  "hero.badge": { en: "Enterprise Fleet Management", ar: "إدارة أسطول المؤسسات" },
+  "hero.badge": { en: "Next-Gen Fleet Management", ar: "إدارة أسطول من الجيل التالي" },
   "hero.line1": { en: "Smart Employee", ar: "نقل الموظفين" },
   "hero.line2": { en: "Transportation", ar: "الذكي" },
-  "hero.desc": { en: "Effortless route planning for Workers, Bus Drivers, Truck Drivers, and Supervisors. Route selection, attendance tracking, real-time notifications, smart pickup, and heatmap analytics.", ar: "تخطيط مسارات سهل للعمال وسائقي الحافلات وسائقي الشاحنات والمشرفين. اختيار المسارات وتتبع الحضور والإشعارات الفورية والاستلام الذكي وتحليلات الخرائط الحرارية." },
+  "hero.desc": { en: "Real-time tracking, intelligent routing, and seamless communication for your entire fleet. Powered by precision technology.", ar: "تتبع في الوقت الفعلي، توجيه ذكي، وتواصل سلس لأسطولك بالكامل. مدعوم بتقنية دقيقة." },
   "hero.explore": { en: "Explore", ar: "استكشف" },
-  "hero.getstarted": { en: "Get Started", ar: "ابدأ الآن" },
-  "hero.learnmore": { en: "Learn More", ar: "اعرف أكثر" },
 
   // ── Stats ──
   "stat.uptime": { en: "Uptime", ar: "وقت التشغيل" },
@@ -31,48 +27,14 @@ const translations = {
   // ── Features ──
   "features.badge": { en: "Platform Capabilities", ar: "قدرات المنصة" },
   "features.title": { en: "Built for the Future", ar: "مبني للمستقبل" },
-  "features.subtitle": { en: "Everything you need to manage fleet operations efficiently at scale.", ar: "كل ما تحتاجه لإدارة عمليات الأسطول بكفاءة على نطاق واسع." },
   "feature.tracking": { en: "Real-Time Tracking", ar: "التتبع المباشر" },
-  "feature.tracking.desc": { en: "Live GPS positions for your entire fleet updated every second.", ar: "مواقع GPS الحية لأسطولك بالكامل تُحدّث كل ثانية." },
+  "feature.tracking.desc": { en: "Live GPS positions for your entire fleet updated every second", ar: "مواقع GPS الحية لأسطولك بالكامل تُحدّث كل ثانية" },
   "feature.routing": { en: "Smart Routing", ar: "التوجيه الذكي" },
-  "feature.routing.desc": { en: "AI-optimized routes that save fuel and reduce travel time.", ar: "مسارات محسّنة بالذكاء الاصطناعي توفر الوقود وتقلل وقت السفر." },
+  "feature.routing.desc": { en: "AI-optimized routes that save fuel and reduce travel time", ar: "مسارات محسّنة بالذكاء الاصطناعي توفر الوقود وتقلل وقت السفر" },
   "feature.analytics": { en: "Advanced Analytics", ar: "تحليلات متقدمة" },
-  "feature.analytics.desc": { en: "Deep insights into fleet performance and efficiency metrics.", ar: "رؤى عميقة حول أداء الأسطول ومقاييس الكفاءة." },
+  "feature.analytics.desc": { en: "Deep insights into fleet performance and efficiency metrics", ar: "رؤى عميقة حول أداء الأسطول ومقاييس الكفاءة" },
   "feature.alerts": { en: "Instant Alerts", ar: "تنبيهات فورية" },
-  "feature.alerts.desc": { en: "Real-time notifications for arrivals, delays, and emergencies.", ar: "إشعارات فورية للوصول والتأخير وحالات الطوارئ." },
-  "feature.smartpickup": { en: "Smart Pickup", ar: "الاستلام الذكي" },
-  "feature.smartpickup.desc": { en: "Users request pickup from their location. The closest bus is assigned automatically.", ar: "يطلب المستخدمون الاستلام من موقعهم. يتم تعيين أقرب حافلة تلقائياً." },
-  "feature.heatmap": { en: "Heatmap Analytics", ar: "تحليلات الخريطة الحرارية" },
-  "feature.heatmap.desc": { en: "Visualize congestion and high-density areas along routes for supervisors.", ar: "تصور الازدحام والمناطق عالية الكثافة على المسارات للمشرفين." },
-
-  // ── How It Works ──
-  "howitworks.badge": { en: "How It Works", ar: "كيف يعمل" },
-  "howitworks.title": { en: "Three Simple Steps", ar: "ثلاث خطوات بسيطة" },
-  "howitworks.1.title": { en: "Select Your Role", ar: "اختر دورك" },
-  "howitworks.1.desc": { en: "Choose your role as Worker, Bus Driver, Truck Driver, or Supervisor to get started.", ar: "اختر دورك كعامل أو سائق حافلة أو سائق شاحنة أو مشرف للبدء." },
-  "howitworks.2.title": { en: "Track & Navigate", ar: "تتبع وتنقل" },
-  "howitworks.2.desc": { en: "View live maps, optimized routes, and real-time status updates from your dashboard.", ar: "اعرض الخرائط الحية والمسارات المحسنة والتحديثات الفورية من لوحة التحكم." },
-  "howitworks.3.title": { en: "Arrive Safely", ar: "تصل بأمان" },
-  "howitworks.3.desc": { en: "Smart notifications, attendance tracking, and feedback ensure a smooth experience.", ar: "الإشعارات الذكية وتتبع الحضور والتقييم تضمن تجربة سلسة." },
-
-  // ── Testimonials ──
-  "testimonials.badge": { en: "What People Say", ar: "ماذا يقول الناس" },
-  "testimonials.title": { en: "Trusted by Thousands", ar: "موثوق من الآلاف" },
-  "testimonial.1.name": { en: "Ahmed Hassan", ar: "أحمد حسن" },
-  "testimonial.1.role": { en: "Worker", ar: "عامل" },
-  "testimonial.1.text": { en: "EVA Route transformed my daily commute. I never miss my bus anymore with the real-time tracking.", ar: "حوّل EVA Route تنقلي اليومي. لم أعد أفوّت حافلتي بفضل التتبع المباشر." },
-  "testimonial.2.name": { en: "Omar Khalil", ar: "عمر خليل" },
-  "testimonial.2.role": { en: "Bus Driver", ar: "سائق حافلة" },
-  "testimonial.2.text": { en: "The optimized routes save me 30 minutes daily. The worker location feature is a game changer.", ar: "المسارات المحسنة توفر لي 30 دقيقة يومياً. ميزة مواقع العمال غيّرت كل شيء." },
-  "testimonial.3.name": { en: "Fatma Said", ar: "فاطمة سعيد" },
-  "testimonial.3.role": { en: "Supervisor", ar: "مشرفة" },
-  "testimonial.3.text": { en: "Full fleet visibility and analytics help me make data-driven decisions every day.", ar: "الرؤية الكاملة للأسطول والتحليلات تساعدني في اتخاذ قرارات مبنية على البيانات يومياً." },
-
-  // ── CTA ──
-  "cta.title": { en: "Ready to Transform Your Fleet?", ar: "مستعد لتحويل أسطولك؟" },
-  "cta.desc": { en: "Join thousands of companies using EVA Route for smarter transportation management.", ar: "انضم لآلاف الشركات التي تستخدم EVA Route لإدارة النقل الأذكى." },
-  "cta.feature1": { en: "Free to start", ar: "مجاني للبدء" },
-  "cta.feature2": { en: "Enterprise ready", ar: "جاهز للمؤسسات" },
+  "feature.alerts.desc": { en: "Real-time notifications for arrivals, delays, and emergencies", ar: "إشعارات فورية للوصول والتأخير وحالات الطوارئ" },
 
   // ── Roles ──
   "roles.badge": { en: "Get Started", ar: "ابدأ الآن" },
@@ -115,8 +77,6 @@ const translations = {
   "login.visual.title2": { en: "Transportation", ar: "النقل" },
   "login.visual.desc": { en: "Managing the world's finest fleet operations with precision, reliability, and uncompromising standards of service.", ar: "إدارة أرقى عمليات الأساطيل في العالم بدقة وموثوقية ومعايير خدمة لا تقبل المساومة." },
   "login.visual.footer": { en: "© 2026 EVA Transportation Group", ar: "© 2026 مجموعة إيفا للنقل" },
-  "login.google": { en: "Continue with Google", ar: "المتابعة مع Google" },
-  "login.or": { en: "or", ar: "أو" },
 
   // ── Role Introduction ──
   "intro.skip": { en: "Skip to Login →", ar: "← تخطي إلى الدخول" },
@@ -247,8 +207,7 @@ const translations = {
   "nav.tracking": { en: "Live Tracking", ar: "التتبع المباشر" },
   "nav.users": { en: "Users", ar: "المستخدمون" },
   "nav.analytics": { en: "Analytics", ar: "التحليلات" },
-  "nav.settings": { en: "Settings", ar: "الإعدادات" },
-  "nav.schedule": { en: "Schedule", ar: "الجدول" },
+  "nav.settings": { en: "Settings", ar: "الإعدارات" },
 
   // ── Worker Dashboard ──
   "worker.nextbus": { en: "Next Bus", ar: "الحافلة التالية" },
@@ -258,18 +217,6 @@ const translations = {
   "worker.report.title": { en: "Report an Issue", ar: "الإبلاغ عن مشكلة" },
   "worker.report.placeholder": { en: "Describe your issue...", ar: "اوصف مشكلتك..." },
   "worker.report.submit": { en: "Submit Report", ar: "إرسال البلاغ" },
-  "worker.schedule.title": { en: "Today's Schedule", ar: "جدول اليوم" },
-  "worker.quickactions": { en: "Quick Actions", ar: "إجراءات سريعة" },
-  "worker.action.absence": { en: "Request Absence", ar: "طلب غياب" },
-  "worker.action.schedule": { en: "View Schedule", ar: "عرض الجدول" },
-  "worker.action.route": { en: "Select Route", ar: "اختيار المسار" },
-  "schedule.pickup": { en: "Bus Pickup", ar: "استلام الحافلة" },
-  "schedule.arrive": { en: "Arrive at Work", ar: "الوصول للعمل" },
-  "schedule.departure": { en: "Departure", ar: "المغادرة" },
-  "schedule.dropoff": { en: "Drop-off at Home", ar: "الإنزال في المنزل" },
-  "schedule.confirmed": { en: "Confirmed", ar: "مؤكد" },
-  "schedule.ontrack": { en: "On Track", ar: "في الموعد" },
-  "schedule.pending": { en: "Pending", ar: "قيد الانتظار" },
 
   // ── Bus Driver Dashboard ──
   "bus.assigned": { en: "Workers Assigned", ar: "العمال المعيّنون" },
@@ -377,6 +324,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     document.documentElement.lang = lang;
   }, []);
 
+  // Set initial dir
   React.useEffect(() => {
     document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = language;

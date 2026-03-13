@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Fix default marker icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -48,6 +48,8 @@ interface Props {
 }
 
 const LiveMap = ({ showWorkers = true, showBuses = true, height = "h-[300px] sm:h-[400px] lg:h-[500px]" }: Props) => {
+  const { t } = useLanguage();
+
   return (
     <div className={`${height} rounded-xl overflow-hidden border border-border/30 relative`}>
       <MapContainer
@@ -81,15 +83,15 @@ const LiveMap = ({ showWorkers = true, showBuses = true, height = "h-[300px] sm:
       <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 glass-card p-2 sm:p-3 z-[1000] text-xs space-y-1.5">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded bg-primary" />
-          <span>Buses</span>
+          <span>{t("map.buses")}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-success" />
-          <span>Workers</span>
+          <span>{t("map.workers")}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-6 h-0.5 bg-primary" />
-          <span>Route</span>
+          <span>{t("map.route")}</span>
         </div>
       </div>
     </div>

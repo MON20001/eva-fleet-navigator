@@ -5,7 +5,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @layer base {
-  :root {
+  /* ── Dark Theme (default) ── */
+  :root, .dark {
     --background: 210 11% 4%;
     --foreground: 45 100% 95%;
 
@@ -56,11 +57,63 @@
     --glow-primary: 43 100% 58% / 0.15;
     --glow-primary-strong: 43 100% 58% / 0.3;
   }
+
+  /* ── Light Theme ── */
+  .light {
+    --background: 40 30% 96%;
+    --foreground: 210 20% 12%;
+
+    --card: 40 25% 93%;
+    --card-foreground: 210 20% 12%;
+
+    --popover: 40 25% 93%;
+    --popover-foreground: 210 20% 12%;
+
+    --primary: 43 100% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 40 20% 88%;
+    --secondary-foreground: 210 20% 20%;
+
+    --muted: 40 15% 85%;
+    --muted-foreground: 210 10% 40%;
+
+    --accent: 43 100% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 35%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 45%;
+    --warning-foreground: 0 0% 0%;
+
+    --border: 40 15% 82%;
+    --input: 40 15% 82%;
+    --ring: 43 100% 45%;
+
+    --sidebar-background: 40 25% 94%;
+    --sidebar-foreground: 210 20% 15%;
+    --sidebar-primary: 43 100% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 20% 90%;
+    --sidebar-accent-foreground: 210 20% 15%;
+    --sidebar-border: 40 15% 82%;
+    --sidebar-ring: 43 100% 45%;
+
+    --glass-bg: 40 25% 95% / 0.7;
+    --glass-border: 40 15% 75% / 0.3;
+    --glow-primary: 43 100% 45% / 0.12;
+    --glow-primary-strong: 43 100% 45% / 0.25;
+  }
 }
 
 @layer base {
   * {
     @apply border-border;
+    transition: background-color 0.3s ease, color 0.15s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   body {
@@ -72,9 +125,51 @@
     font-family: 'Space Grotesk', sans-serif;
   }
 
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
+  }
+
+  /* ── Premium Scrollbar ── */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, hsl(var(--muted-foreground) / 0.3), hsl(var(--primary) / 0.2));
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, hsl(var(--primary) / 0.5), hsl(var(--primary) / 0.3));
+    border-radius: 4px;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+  }
+
+  /* ── Autofill override ── */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px hsl(var(--background)) inset !important;
+    -webkit-text-fill-color: hsl(var(--foreground)) !important;
+    box-shadow: 0 0 0 30px hsl(var(--background)) inset !important;
+    caret-color: hsl(var(--foreground)) !important;
+    transition: background-color 5000s ease-in-out 0s;
   }
 }
 
@@ -98,15 +193,15 @@
 
   .glass-card-premium {
     @apply rounded-2xl border border-border/20;
-    background: linear-gradient(135deg, hsla(210, 11%, 10%, 0.7), hsla(210, 11%, 6%, 0.8));
+    background: linear-gradient(135deg, hsla(var(--glass-bg)), hsla(var(--card) / 0.8));
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
-    box-shadow: 0 4px 30px hsl(210 11% 4% / 0.3), inset 0 1px 0 hsl(210 11% 20% / 0.1);
+    box-shadow: 0 4px 30px hsl(210 11% 4% / 0.15), inset 0 1px 0 hsl(var(--border) / 0.1);
   }
 
   .glass-card-premium:hover {
     border-color: hsl(var(--primary) / 0.3);
-    box-shadow: 0 0 60px hsl(var(--glow-primary)), 0 8px 40px hsl(210 11% 4% / 0.5), inset 0 1px 0 hsl(210 11% 20% / 0.15);
+    box-shadow: 0 0 60px hsl(var(--glow-primary)), 0 8px 40px hsl(210 11% 4% / 0.3), inset 0 1px 0 hsl(var(--border) / 0.15);
   }
 
   .glow-border {
@@ -131,7 +226,7 @@
   }
 
   .bg-gradient-dark {
-    background: linear-gradient(180deg, hsl(210 11% 4%), hsl(210 11% 8%));
+    background: linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)));
   }
 
   .bg-gradient-radial {
@@ -168,7 +263,6 @@
     animation: pulse-glow 2s ease-in-out infinite;
   }
 
-  /* Premium button */
   .btn-premium {
     @apply relative overflow-hidden px-8 py-4 rounded-xl font-semibold text-sm tracking-[0.15em] uppercase transition-all duration-500;
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(35 100% 50%));
@@ -194,13 +288,11 @@
     transform: translateX(100%);
   }
 
-  /* Input focus glow */
   .input-glow:focus {
     border-color: hsl(var(--primary));
     box-shadow: 0 0 20px hsl(var(--glow-primary)), 0 0 40px hsl(var(--glow-primary));
   }
 
-  /* Animated grid bg */
   .grid-bg {
     background-image: 
       linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px),
@@ -208,7 +300,6 @@
     background-size: 60px 60px;
   }
 
-  /* 3D tilt card */
   .tilt-card {
     transform-style: preserve-3d;
     perspective: 1000px;
@@ -258,6 +349,15 @@
   100% { transform: scale(4); opacity: 0; }
 }
 
+@keyframes bell-ring {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-12deg); }
+  45% { transform: rotate(8deg); }
+  60% { transform: rotate(-6deg); }
+  75% { transform: rotate(2deg); }
+}
+
 .animate-float { animation: float 6s ease-in-out infinite; }
 .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
 .animate-gradient-shift { 
@@ -267,8 +367,8 @@
 .animate-shimmer { animation: shimmer 2s ease-in-out infinite; }
 .animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
 .animate-orbit { animation: orbit 20s linear infinite; }
+.animate-bell-ring { animation: bell-ring 0.8s ease-in-out; }
 
-/* Scroll reveal base (used with framer-motion) */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(40px);

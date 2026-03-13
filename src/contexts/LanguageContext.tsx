@@ -5,10 +5,10 @@ export type Language = "en" | "ar";
 const translations = {
   // ── Header / Global ──
   "system.online": { en: "System Online", ar: "النظام متصل" },
-  "eva.transport": { en: "EVA Transport", ar: "إيفا للنقل" },
+  "eva.transport": { en: "EVA Transport", ar: "EVA Transport" },
   "footer.rights": { en: "© 2026 All rights reserved. Built with precision.", ar: "© 2026 جميع الحقوق محفوظة. صُمم بدقة." },
-  "footer.eva": { en: "EVA Transport", ar: "إيفا للنقل" },
-  "footer.copyright": { en: "© 2026 EVA Transport. All rights reserved.", ar: "© 2026 إيفا للنقل. جميع الحقوق محفوظة." },
+  "footer.eva": { en: "EVA Transport", ar: "EVA Transport" },
+  "footer.copyright": { en: "© 2026 EVA Transport. All rights reserved.", ar: "© 2026 EVA Transport. جميع الحقوق محفوظة." },
   "fleet.system": { en: "Fleet Management System", ar: "نظام إدارة الأسطول" },
 
   // ── Hero ──
@@ -76,16 +76,17 @@ const translations = {
   "login.visual.title1": { en: "Excellence in", ar: "التميز في" },
   "login.visual.title2": { en: "Transportation", ar: "النقل" },
   "login.visual.desc": { en: "Managing the world's finest fleet operations with precision, reliability, and uncompromising standards of service.", ar: "إدارة أرقى عمليات الأساطيل في العالم بدقة وموثوقية ومعايير خدمة لا تقبل المساومة." },
-  "login.visual.footer": { en: "© 2026 EVA Transportation Group", ar: "© 2026 مجموعة إيفا للنقل" },
+  "login.visual.footer": { en: "© 2026 EVA Transportation Group", ar: "© 2026 EVA Transportation Group" },
+  "login.forgot": { en: "Forgot Password?", ar: "نسيت كلمة المرور؟" },
 
   // ── Role Introduction ──
-  "intro.skip": { en: "Skip to Login →", ar: "← تخطي إلى الدخول" },
+  "intro.skip": { en: "Skip to Login →", ar: "تخطي إلى الدخول ←" },
   "intro.scroll": { en: "Scroll to explore", ar: "مرر للاستكشاف" },
   "intro.features": { en: "Features", ar: "المميزات" },
   "intro.features.title": { en: "Everything You Need", ar: "كل ما تحتاجه" },
   "intro.preview": { en: "Live Preview", ar: "معاينة مباشرة" },
   "intro.benefits": { en: "Benefits", ar: "الفوائد" },
-  "intro.benefits.title": { en: "Why EVA Transport?", ar: "لماذا إيفا للنقل؟" },
+  "intro.benefits.title": { en: "Why EVA Transport?", ar: "لماذا EVA Transport؟" },
   "intro.cta.title": { en: "Ready to Get Started?", ar: "مستعد للبدء؟" },
   "intro.cta.desc": { en: "Sign in or create your account to access your personalized dashboard.", ar: "سجل الدخول أو أنشئ حسابك للوصول إلى لوحة التحكم المخصصة." },
   "intro.cta.button": { en: "Continue to Login", ar: "متابعة تسجيل الدخول" },
@@ -191,6 +192,9 @@ const translations = {
   "map.pickup": { en: "Pickup", ar: "استلام" },
   "map.checkpoint": { en: "Checkpoint", ar: "نقطة تفتيش" },
   "map.delivery": { en: "Delivery", ar: "توصيل" },
+  "map.buses": { en: "Buses", ar: "حافلات" },
+  "map.workers": { en: "Workers", ar: "عمال" },
+  "map.route": { en: "Route", ar: "مسار" },
 
   // ── Dashboard ──
   "dash.portal": { en: "Portal", ar: "بوابة" },
@@ -207,7 +211,8 @@ const translations = {
   "nav.tracking": { en: "Live Tracking", ar: "التتبع المباشر" },
   "nav.users": { en: "Users", ar: "المستخدمون" },
   "nav.analytics": { en: "Analytics", ar: "التحليلات" },
-  "nav.settings": { en: "Settings", ar: "الإعدارات" },
+  "nav.settings": { en: "Settings", ar: "الإعدادات" },
+  "nav.profile": { en: "Profile", ar: "الملف الشخصي" },
 
   // ── Worker Dashboard ──
   "worker.nextbus": { en: "Next Bus", ar: "الحافلة التالية" },
@@ -284,6 +289,10 @@ const translations = {
   "qm.stop": { en: "Please stop here", ar: "من فضلك توقف هنا" },
   "qm.issue": { en: "Report an issue", ar: "الإبلاغ عن مشكلة" },
   "qm.sent": { en: "Message sent:", ar: "تم إرسال الرسالة:" },
+  "qm.confirm.title": { en: "Send Message?", ar: "إرسال الرسالة؟" },
+  "qm.confirm.desc": { en: "Are you sure you want to send this message?", ar: "هل أنت متأكد من إرسال هذه الرسالة؟" },
+  "qm.confirm.yes": { en: "Confirm", ar: "تأكيد" },
+  "qm.confirm.no": { en: "Cancel", ar: "إلغاء" },
 
   // ── 404 ──
   "notfound.title": { en: "404", ar: "404" },
@@ -298,6 +307,33 @@ const translations = {
   "day.fri": { en: "Fri", ar: "جمعة" },
   "day.sat": { en: "Sat", ar: "سبت" },
   "day.sun": { en: "Sun", ar: "أحد" },
+
+  // ── Profile ──
+  "profile.title": { en: "My Profile", ar: "ملفي الشخصي" },
+  "profile.photo": { en: "Profile Photo", ar: "صورة الملف الشخصي" },
+  "profile.fullname": { en: "Full Name", ar: "الاسم الكامل" },
+  "profile.email": { en: "Email", ar: "البريد الإلكتروني" },
+  "profile.phone": { en: "Phone Number", ar: "رقم الهاتف" },
+  "profile.age": { en: "Age", ar: "العمر" },
+  "profile.address": { en: "Address", ar: "العنوان" },
+  "profile.nationalid": { en: "National ID", ar: "الرقم القومي" },
+  "profile.role": { en: "Role", ar: "الدور" },
+  "profile.save": { en: "Save Changes", ar: "حفظ التغييرات" },
+  "profile.saved": { en: "Profile saved successfully", ar: "تم حفظ الملف الشخصي بنجاح" },
+
+  // ── Theme ──
+  "theme.dark": { en: "Dark Mode", ar: "الوضع الداكن" },
+  "theme.light": { en: "Light Mode", ar: "الوضع الفاتح" },
+
+  // ── Notifications ──
+  "notif.title": { en: "Notifications", ar: "الإشعارات" },
+  "notif.markall": { en: "Mark all read", ar: "تحديد الكل كمقروء" },
+  "notif.empty": { en: "No new notifications", ar: "لا توجد إشعارات جديدة" },
+
+  // ── Feature pages ──
+  "feature.learnmore": { en: "Learn More", ar: "اعرف المزيد" },
+  "feature.back": { en: "← Back", ar: "← رجوع" },
+  "feature.demo": { en: "Interactive Demo", ar: "عرض تفاعلي" },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
@@ -306,7 +342,7 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: TranslationKey) => string;
-  dir: "ltr" | "rtl";
+  dir: "ltr";
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -320,13 +356,14 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("eva-lang", lang);
-    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    // Always LTR - Arabic does NOT change layout direction
+    document.documentElement.dir = "ltr";
     document.documentElement.lang = lang;
   }, []);
 
-  // Set initial dir
+  // Set initial lang attribute (always LTR)
   React.useEffect(() => {
-    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+    document.documentElement.dir = "ltr";
     document.documentElement.lang = language;
   }, [language]);
 
@@ -335,10 +372,8 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     return entry?.[language] ?? key;
   }, [language]);
 
-  const dir = language === "ar" ? "rtl" : "ltr";
-
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, dir }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, dir: "ltr" }}>
       {children}
     </LanguageContext.Provider>
   );

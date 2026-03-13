@@ -2,13 +2,16 @@ import { useState } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { useLanguage, TranslationKey } from "@/contexts/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Bus, Truck, User, Shield, MapPin, MessageSquare, Bell,
   BarChart3, Settings, LogOut, Menu, X, Home, AlertTriangle,
-  Navigation, Package, Users, FileText, Clock
+  Navigation, Package, Users, FileText, Clock, UserCircle
 } from "lucide-react";
 import evaLogo from "@/assets/eva-logo.png";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
+import NotificationDropdown from "@/components/NotificationDropdown";
 
 const roleConfig: Record<UserRole, { labelKey: TranslationKey; icon: React.ElementType; nav: { labelKey: TranslationKey; icon: React.ElementType; id: string }[] }> = {
   worker: {
@@ -66,12 +69,18 @@ interface Props {
 const DashboardLayout = ({ children }: Props) => {
   const { user, logout } = useAuth();
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   if (!user) return null;
   const config = roleConfig[user.role];
   const RoleIcon = config.icon;
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -99,7 +108,7 @@ const DashboardLayout = ({ children }: Props) => {
         <div className="flex items-center gap-3 px-6 py-5 border-b border-sidebar-border">
           <img src={evaLogo} alt="EVA Transport" className="h-10 w-auto rounded-lg" />
           <div>
-            <h1 className="font-display font-bold text-lg text-foreground">{t("eva.transport")}</h1>
+            <h1 className="font-display font-bold text-lg text-foreground">EVA Transport</h1>
             <p className="text-xs text-muted-foreground">{t(config.labelKey)} {t("dash.portal")}</p>
           </div>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden ml-auto text-muted-foreground">
@@ -121,9 +130,10 @@ const DashboardLayout = ({ children }: Props) => {
           ))}
         </nav>
 
-        {/* Language switcher in sidebar */}
-        <div className="px-4 py-2">
-          <LanguageSwitcher className="w-full justify-center" />
+        {/* Bottom controls */}
+        <div className="px-4 py-2 flex items-center gap-2">
+          <LanguageSwitcher className="flex-1 justify-center" />
+          <ThemeToggle />
         </div>
 
         {/* User */}
@@ -136,7 +146,14 @@ const DashboardLayout = ({ children }: Props) => {
               <p className="text-sm font-medium truncate">{user.name}</p>
               <p className="text-xs text-muted-foreground">{t(config.labelKey)}</p>
             </div>
-            <button onClick={logout} className="text-muted-foreground hover:text-destructive transition-colors">
+            <button
+              onClick={() => navigate("/profile")}
+              className="text-muted-foreground hover:text-primary transition-colors"
+              title={t("nav.profile")}
+            >
+              <UserCircle className="w-4 h-4" />
+            </button>
+            <button onClick={handleLogout} className="text-muted-foreground hover:text-destructive transition-colors">
               <LogOut className="w-4 h-4" />
             </button>
           </div>
@@ -153,11 +170,9 @@ const DashboardLayout = ({ children }: Props) => {
           <h2 className="font-display font-semibold text-lg">
             {t(config.nav.find((n) => n.id === activeTab)?.labelKey || "nav.dashboard")}
           </h2>
-          <div className="ml-auto flex items-center gap-3">
-            <button className="relative p-2 rounded-lg hover:bg-secondary transition-colors">
-              <Bell className="w-5 h-5 text-muted-foreground" />
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary" />
-            </button>
+          <div className="ml-auto flex items-center gap-2">
+            <ThemeToggle />
+            <NotificationDropdown />
           </div>
         </header>
 

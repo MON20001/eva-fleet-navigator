@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export type UserRole = "worker" | "bus-driver" | "truck-driver" | "admin";
 
@@ -20,8 +20,20 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    const saved = localStorage.getItem("eva-user");
+    return saved ? JSON.parse(saved) : null;
+  });
   const [pendingRole, setPendingRole] = useState<UserRole | null>(null);
+
+  // Persist user session
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("eva-user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("eva-user");
+    }
+  }, [user]);
 
   const login = (name: string, _email: string) => {
     if (!pendingRole) return;
@@ -36,6 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     setPendingRole(null);
+    localStorage.removeItem("eva-user");
   };
 
   return (

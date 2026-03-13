@@ -7,12 +7,20 @@ import { ArrowRight, Mail, Lock, UserIcon, Eye, EyeOff, CheckCircle, Loader2 } f
 import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const roleLabelKeys: Record<string, "role.worker" | "role.bus" | "role.truck" | "role.admin"> = {
   worker: "role.worker",
   "bus-driver": "role.bus",
   "truck-driver": "role.truck",
   admin: "role.admin",
+};
+
+const roleRoutes: Record<string, string> = {
+  worker: "/worker",
+  "bus-driver": "/bus-driver",
+  "truck-driver": "/truck-driver",
+  admin: "/admin",
 };
 
 const LoginPage = () => {
@@ -33,6 +41,9 @@ const LoginPage = () => {
     navigate("/");
     return null;
   }
+
+  // Workers, Bus Drivers, Truck Drivers can only sign in (not register)
+  const canRegister = pendingRole === "admin";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,10 +69,11 @@ const LoginPage = () => {
 
     await new Promise((r) => setTimeout(r, 800));
     login(isRegister ? name : email.split("@")[0], email);
-    navigate("/");
+    navigate(roleRoutes[pendingRole]);
   };
 
   const toggleMode = () => {
+    if (!canRegister) return;
     setIsRegister(!isRegister);
     setError("");
   };
@@ -131,9 +143,10 @@ const LoginPage = () => {
 
       {/* ── Right side - Form ── */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-5 sm:p-8 lg:p-16 relative z-10">
-        {/* Language switcher */}
-        <div className="absolute top-5 end-5 z-20">
+        {/* Top controls */}
+        <div className="absolute top-5 right-5 z-20 flex items-center gap-2">
           <LanguageSwitcher />
+          <ThemeToggle />
         </div>
 
         <AnimatePresence>
@@ -168,7 +181,7 @@ const LoginPage = () => {
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-3 mb-10">
             <img src={evaLogo} alt="EVA Transport" className="h-10 w-auto rounded-lg" />
-            <span className="font-display font-bold text-lg">{t("eva.transport")}</span>
+            <span className="font-display font-bold text-lg">EVA Transport</span>
           </div>
 
           <motion.p
@@ -300,6 +313,13 @@ const LoginPage = () => {
                 )}
               </AnimatePresence>
 
+              {/* Forgot Password */}
+              <div className="text-right">
+                <button type="button" className="text-xs text-primary hover:underline">
+                  {t("login.forgot")}
+                </button>
+              </div>
+
               <motion.button
                 type="submit"
                 disabled={isLoading}
@@ -319,18 +339,20 @@ const LoginPage = () => {
             </motion.form>
           </AnimatePresence>
 
-          <div className="mt-8">
-            <button
-              type="button"
-              onClick={toggleMode}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
-            >
-              {isRegister ? t("login.has.account") : t("login.no.account")}
-              <span className="text-primary hover:underline font-medium">
-                {isRegister ? t("login.switch.signin") : t("login.switch.create")}
-              </span>
-            </button>
-          </div>
+          {canRegister && (
+            <div className="mt-8">
+              <button
+                type="button"
+                onClick={toggleMode}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+              >
+                {isRegister ? t("login.has.account") : t("login.no.account")}
+                <span className="text-primary hover:underline font-medium">
+                  {isRegister ? t("login.switch.signin") : t("login.switch.create")}
+                </span>
+              </button>
+            </div>
+          )}
 
           <div className="mt-6">
             <button

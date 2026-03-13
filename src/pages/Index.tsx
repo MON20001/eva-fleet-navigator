@@ -8,10 +8,7 @@ import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";
 import FloatingShapes from "@/components/FloatingShapes";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import WorkerDashboard from "./WorkerDashboard";
-import BusDriverDashboard from "./BusDriverDashboard";
-import TruckDriverDashboard from "./TruckDriverDashboard";
-import AdminDashboard from "./AdminDashboard";
+import ThemeToggle from "@/components/ThemeToggle";
 
 /* ── Scroll-reveal section ── */
 const RevealSection = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
@@ -51,6 +48,13 @@ const TiltCard = ({ children, className = "" }: { children: React.ReactNode; cla
       {children}
     </div>
   );
+};
+
+const featureRouteMap: Record<string, string> = {
+  "feature.tracking": "tracking",
+  "feature.routing": "routing",
+  "feature.analytics": "analytics",
+  "feature.alerts": "alerts",
 };
 
 const Landing = () => {
@@ -102,25 +106,25 @@ const Landing = () => {
           className="flex items-center gap-3"
         >
           <img src={evaLogo} alt="EVA Transport" className="h-12 w-auto rounded-lg" />
-          <span className="font-display font-bold text-xl">{t("eva.transport")}</span>
+          <span className="font-display font-bold text-xl">EVA Transport</span>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-4"
+          className="flex items-center gap-3"
         >
           <div className="hidden sm:flex items-center gap-2">
             <div className="pulse-dot" />
             <span className="text-xs text-muted-foreground">{t("system.online")}</span>
           </div>
           <LanguageSwitcher />
+          <ThemeToggle />
         </motion.div>
       </header>
 
       {/* ══════════ HERO ══════════ */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 lg:pt-28 pb-16 sm:pb-20 text-center">
-        {/* Radial glow behind hero */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[800px] h-[300px] sm:h-[600px] rounded-full bg-primary/5 blur-[100px] sm:blur-[150px] pointer-events-none" />
 
         <motion.div
@@ -221,7 +225,10 @@ const Landing = () => {
               transition={{ delay: i * 0.12, duration: 0.6 }}
             >
               <TiltCard className="h-full">
-                <div className="glass-card-premium p-8 h-full group cursor-default transition-all duration-500">
+                <div
+                  className="glass-card-premium p-8 h-full group cursor-pointer transition-all duration-500"
+                  onClick={() => navigate(`/feature/${featureRouteMap[f.labelKey]}`)}
+                >
                   <div className="flex items-start gap-5">
                     <motion.div
                       whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
@@ -234,6 +241,9 @@ const Landing = () => {
                     <div>
                       <h3 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors duration-300">{t(f.labelKey)}</h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">{t(f.descKey)}</p>
+                      <span className="inline-flex items-center gap-1 text-xs text-primary mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {t("feature.learnmore")} <ArrowRight className="w-3 h-3" />
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -294,7 +304,7 @@ const Landing = () => {
       <footer className="relative z-10 text-center py-10 text-xs text-muted-foreground border-t border-border/30">
         <div className="flex items-center justify-center gap-2 mb-2">
           <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-          <span className="tracking-widest uppercase">{t("footer.eva")}</span>
+          <span className="tracking-widest uppercase">EVA Transport</span>
           <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
         </div>
         {t("footer.rights")}
@@ -305,15 +315,21 @@ const Landing = () => {
 
 const Index = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
-  if (!user) return <Landing />;
-
-  switch (user.role) {
-    case "worker": return <WorkerDashboard />;
-    case "bus-driver": return <BusDriverDashboard />;
-    case "truck-driver": return <TruckDriverDashboard />;
-    case "admin": return <AdminDashboard />;
+  // If logged in, redirect to appropriate dashboard
+  if (user) {
+    const roleRoutes: Record<UserRole, string> = {
+      worker: "/worker",
+      "bus-driver": "/bus-driver",
+      "truck-driver": "/truck-driver",
+      admin: "/admin",
+    };
+    navigate(roleRoutes[user.role], { replace: true });
+    return null;
   }
+
+  return <Landing />;
 };
 
 export default Index;

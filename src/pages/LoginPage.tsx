@@ -38,8 +38,7 @@ const LoginPage = () => {
   const [isSuccess, setIsSuccess] = useState(false);
 
   if (!pendingRole) {
-    navigate("/");
-    return null;
+    return <Navigate to="/" replace />;
   }
 
   // Workers, Bus Drivers, Truck Drivers can only sign in (not register)

@@ -274,13 +274,14 @@ const RoleIntroduction = () => {
       <div className="fixed inset-0 grid-bg opacity-20 pointer-events-none" />
 
       {/* ── fixed top bar ── */}
-      <div className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between" style={{ background: "linear-gradient(180deg, hsl(210 11% 4%), transparent)" }}>
+      <div className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between bg-gradient-to-b from-background to-transparent">
         <div className="flex items-center gap-3">
           <img src={evaLogo} alt="EVA" className="h-10 w-auto rounded-lg" />
           <span className="font-display font-bold text-sm hidden sm:block">{t("eva.transport")}</span>
         </div>
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
+          <ThemeToggle />
           <button
             onClick={() => navigate("/login")}
             className="text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-primary transition-colors"

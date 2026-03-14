@@ -1,6 +1,8 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { motion } from "framer-motion";
+import ParticleField from "@/components/ParticleField";
 
 const NotFound = () => {
   const location = useLocation();
@@ -11,14 +13,20 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">{t("notfound.title")}</h1>
-        <p className="mb-4 text-xl text-muted-foreground">{t("notfound.desc")}</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-mesh relative overflow-hidden">
+      <ParticleField count={10} />
+      <div className="fixed inset-0 grid-bg opacity-20 pointer-events-none" />
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative z-10 text-center glass-card-premium p-10 sm:p-16"
+      >
+        <h1 className="mb-4 text-6xl font-display font-bold text-gradient">{t("notfound.title")}</h1>
+        <p className="mb-6 text-lg text-muted-foreground">{t("notfound.desc")}</p>
+        <Link to="/" className="btn-premium inline-flex items-center gap-2">
           {t("notfound.back")}
-        </a>
-      </div>
+        </Link>
+      </motion.div>
     </div>
   );
 };

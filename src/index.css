@@ -187,7 +187,7 @@
 
   .glass-card-hover:hover {
     border-color: hsl(var(--primary) / 0.4);
-    box-shadow: 0 0 40px hsl(var(--glow-primary)), 0 8px 32px hsl(210 11% 4% / 0.5);
+    box-shadow: 0 0 40px hsl(var(--glow-primary)), 0 8px 32px hsl(var(--background) / 0.5);
     transform: translateY(-4px);
   }
 

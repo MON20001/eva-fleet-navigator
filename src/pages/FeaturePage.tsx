@@ -282,7 +282,7 @@ const FeaturePage = () => {
       </section>
 
       <footer className="relative z-10 text-center py-8 text-xs text-muted-foreground border-t border-border/30">
-        © 2026 EVA Transport. All rights reserved.
+        {t("footer.copyright" as any)}
       </footer>
     </div>
   );

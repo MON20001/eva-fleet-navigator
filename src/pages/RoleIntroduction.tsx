@@ -371,7 +371,11 @@ const RoleIntroduction = () => {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                className="glass-card-premium p-6 group cursor-default transition-all duration-500"
+                onClick={() => {
+                  const route = introFeatureRouteMap[f.titleKey as string];
+                  if (route) navigate(`/feature/${route}`);
+                }}
+                className="glass-card-premium p-6 group cursor-pointer transition-all duration-500"
               >
                 <div
                   className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"

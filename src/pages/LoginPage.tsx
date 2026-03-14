@@ -101,7 +101,7 @@ const LoginPage = () => {
           className="absolute w-[500px] h-[500px] rounded-full"
           style={{
             left: '20%', top: '40%',
-            background: 'radial-gradient(circle, hsl(43 100% 58% / 0.08), transparent 60%)',
+            background: 'radial-gradient(circle, hsl(var(--primary) / 0.08), transparent 60%)',
           }}
           animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}

@@ -1,6 +1,6 @@
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Navigate } from "react-router-dom";

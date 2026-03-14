@@ -3,7 +3,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useNavigate, Navigate } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Navigate } from "react-router-dom";
 import { Bus, Truck, User, Shield, ArrowRight, MapPin, Bell, BarChart3, Route, Zap, ChevronDown } from "lucide-react";
 import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";

@@ -12,6 +12,23 @@ import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";
 import FloatingShapes from "@/components/FloatingShapes";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
+
+/* ── feature route mapping for intro features ── */
+const introFeatureRouteMap: Record<string, string> = {
+  "role.worker.f1": "live-tracking",
+  "role.worker.f2": "smart-routing",
+  "role.worker.f3": "driver-notifications",
+  "role.bus.f1": "live-tracking",
+  "role.bus.f2": "smart-routing",
+  "role.bus.f3": "driver-notifications",
+  "role.truck.f1": "smart-routing",
+  "role.truck.f2": "driver-notifications",
+  "role.truck.f3": "live-tracking",
+  "role.admin.f1": "tracking",
+  "role.admin.f2": "analytics",
+  "role.admin.f3": "live-tracking",
+};
 
 /* ── role content with translation keys ── */
 interface RoleContent {

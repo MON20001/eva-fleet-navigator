@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Navigate } from "react-router-dom";
 import { ArrowRight, Mail, Lock, UserIcon, Eye, EyeOff, CheckCircle, Loader2 } from "lucide-react";

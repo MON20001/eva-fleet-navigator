@@ -315,9 +315,7 @@ const Landing = () => {
 
 const Index = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
 
-  // If logged in, redirect to appropriate dashboard
   if (user) {
     const roleRoutes: Record<UserRole, string> = {
       worker: "/worker",
@@ -325,8 +323,7 @@ const Index = () => {
       "truck-driver": "/truck-driver",
       admin: "/admin",
     };
-    navigate(roleRoutes[user.role], { replace: true });
-    return null;
+    return <Navigate to={roleRoutes[user.role]} replace />;
   }
 
   return <Landing />;

@@ -12,6 +12,23 @@ import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";
 import FloatingShapes from "@/components/FloatingShapes";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
+
+/* ── feature route mapping for intro features ── */
+const introFeatureRouteMap: Record<string, string> = {
+  "role.worker.f1": "live-tracking",
+  "role.worker.f2": "smart-routing",
+  "role.worker.f3": "driver-notifications",
+  "role.bus.f1": "live-tracking",
+  "role.bus.f2": "smart-routing",
+  "role.bus.f3": "driver-notifications",
+  "role.truck.f1": "smart-routing",
+  "role.truck.f2": "driver-notifications",
+  "role.truck.f3": "live-tracking",
+  "role.admin.f1": "tracking",
+  "role.admin.f2": "analytics",
+  "role.admin.f3": "live-tracking",
+};
 
 /* ── role content with translation keys ── */
 interface RoleContent {
@@ -257,13 +274,14 @@ const RoleIntroduction = () => {
       <div className="fixed inset-0 grid-bg opacity-20 pointer-events-none" />
 
       {/* ── fixed top bar ── */}
-      <div className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between" style={{ background: "linear-gradient(180deg, hsl(210 11% 4%), transparent)" }}>
+      <div className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between bg-gradient-to-b from-background to-transparent">
         <div className="flex items-center gap-3">
           <img src={evaLogo} alt="EVA" className="h-10 w-auto rounded-lg" />
           <span className="font-display font-bold text-sm hidden sm:block">{t("eva.transport")}</span>
         </div>
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
+          <ThemeToggle />
           <button
             onClick={() => navigate("/login")}
             className="text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-primary transition-colors"
@@ -353,7 +371,11 @@ const RoleIntroduction = () => {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                className="glass-card-premium p-6 group cursor-default transition-all duration-500"
+                onClick={() => {
+                  const route = introFeatureRouteMap[f.titleKey as string];
+                  if (route) navigate(`/feature/${route}`);
+                }}
+                className="glass-card-premium p-6 group cursor-pointer transition-all duration-500"
               >
                 <div
                   className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"

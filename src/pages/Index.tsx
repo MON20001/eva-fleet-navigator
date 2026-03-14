@@ -1,6 +1,6 @@
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Bus, Truck, User, Shield, ArrowRight, MapPin, Bell, BarChart3, Route, Zap, ChevronDown } from "lucide-react";
@@ -315,9 +315,7 @@ const Landing = () => {
 
 const Index = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
 
-  // If logged in, redirect to appropriate dashboard
   if (user) {
     const roleRoutes: Record<UserRole, string> = {
       worker: "/worker",
@@ -325,8 +323,7 @@ const Index = () => {
       "truck-driver": "/truck-driver",
       admin: "/admin",
     };
-    navigate(roleRoutes[user.role], { replace: true });
-    return null;
+    return <Navigate to={roleRoutes[user.role]} replace />;
   }
 
   return <Landing />;

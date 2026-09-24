@@ -91,7 +91,7 @@ const DashboardLayout = ({ children }: Props) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[2400] bg-background/80 backdrop-blur-sm lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}
@@ -99,7 +99,7 @@ const DashboardLayout = ({ children }: Props) => {
 
       {/* Sidebar */}
       <aside className={`
-        fixed lg:static inset-y-0 left-0 z-50 w-72 flex flex-col
+        fixed lg:static inset-y-0 left-0 z-[2500] lg:z-auto w-72 shrink-0 flex flex-col
         bg-sidebar border-r border-sidebar-border
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
@@ -161,9 +161,9 @@ const DashboardLayout = ({ children }: Props) => {
       </aside>
 
       {/* Main */}
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 min-w-0 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="relative z-[2000] flex items-center gap-4 px-4 lg:px-8 py-4 border-b border-border bg-card/50 backdrop-blur-sm">
+        <header className="sticky top-0 shrink-0 z-[2000] flex items-center gap-4 px-4 lg:px-8 py-4 border-b border-border bg-card/95 backdrop-blur-md">
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden text-muted-foreground">
             <Menu className="w-6 h-6" />
           </button>
@@ -177,7 +177,7 @@ const DashboardLayout = ({ children }: Props) => {
         </header>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-8">
+        <div className="relative z-0 flex-1 min-h-0 overflow-y-auto p-3 sm:p-4 lg:p-8">
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 10 }}

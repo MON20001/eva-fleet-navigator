@@ -51,7 +51,7 @@ const LiveMap = ({ showWorkers = true, showBuses = true, height = "h-[300px] sm:
   const { t } = useLanguage();
 
   return (
-    <div className={`${height} rounded-xl overflow-hidden border border-border/30 relative`}>
+    <div className={`${height} rounded-xl overflow-hidden border border-border/30 relative z-0 isolate`}>
       <MapContainer
         center={[30.0444, 31.2357]}
         zoom={13}

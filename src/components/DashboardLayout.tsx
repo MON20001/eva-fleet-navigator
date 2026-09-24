@@ -163,7 +163,7 @@ const DashboardLayout = ({ children }: Props) => {
       {/* Main */}
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="flex items-center gap-4 px-4 lg:px-8 py-4 border-b border-border bg-card/50 backdrop-blur-sm">
+        <header className="relative z-[2000] flex items-center gap-4 px-4 lg:px-8 py-4 border-b border-border bg-card/50 backdrop-blur-sm">
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden text-muted-foreground">
             <Menu className="w-6 h-6" />
           </button>

@@ -199,6 +199,12 @@
     box-shadow: 0 4px 30px hsl(var(--background) / 0.4), inset 0 1px 0 hsl(var(--border) / 0.1);
   }
 
+  .notification-panel {
+    background: hsl(var(--card) / 0.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
   .glass-card-premium:hover {
     border-color: hsl(var(--primary) / 0.3);
     box-shadow: 0 0 60px hsl(var(--glow-primary)), 0 8px 40px hsl(var(--background) / 0.5), inset 0 1px 0 hsl(var(--border) / 0.15);

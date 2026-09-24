@@ -48,7 +48,7 @@ const NotificationDropdown = () => {
   };
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative z-[3000]">
       <button
         onClick={handleBellClick}
         className="relative p-2 rounded-lg hover:bg-secondary transition-colors"
@@ -72,7 +72,7 @@ const NotificationDropdown = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 top-full mt-2 w-80 sm:w-96 glass-card-premium z-50 overflow-hidden"
+            className="absolute right-0 top-full z-[3000] mt-2 w-[calc(100vw-2rem)] max-w-96 glass-card-premium overflow-hidden"
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-border/30">
               <h4 className="font-display font-semibold text-sm">{t("notif.title")}</h4>

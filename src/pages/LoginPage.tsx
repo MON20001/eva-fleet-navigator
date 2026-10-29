@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Mail, Lock, UserIcon, Eye, EyeOff, CheckCircle, Loader2 } from "lucide-react";
+import { ArrowRight, Mail, Lock, UserIcon, Eye, EyeOff, CheckCircle, Loader2, Bus, Truck, ShieldCheck, HardHat, Zap } from "lucide-react";
 import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -23,8 +23,15 @@ const roleRoutes: Record<string, string> = {
   admin: "/admin",
 };
 
+const roleOptions: { role: UserRole; labelKey: "role.worker" | "role.bus" | "role.truck" | "role.admin"; icon: typeof Bus }[] = [
+  { role: "worker", labelKey: "role.worker", icon: HardHat },
+  { role: "bus-driver", labelKey: "role.bus", icon: Bus },
+  { role: "truck-driver", labelKey: "role.truck", icon: Truck },
+  { role: "admin", labelKey: "role.admin", icon: ShieldCheck },
+];
+
 const LoginPage = () => {
-  const { pendingRole, login } = useAuth();
+  const { pendingRole, setPendingRole, login } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);

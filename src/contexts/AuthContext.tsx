@@ -12,7 +12,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   pendingRole: UserRole | null;
-  setPendingRole: (role: UserRole) => void;
+  setPendingRole: (role: UserRole | null) => void;
   login: (name: string, email: string, role?: UserRole) => void;
   logout: () => void;
 }

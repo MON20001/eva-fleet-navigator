@@ -123,6 +123,24 @@ const Landing = () => {
         </motion.div>
       </header>
 
+      {/* ── Skip registration (top of page) ── */}
+      <motion.div
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.35 }}
+        className="relative z-20 flex justify-center px-4 -mt-1"
+      >
+        <button
+          type="button"
+          onClick={() => { window.scrollTo(0, 0); navigate("/login"); }}
+          className="group inline-flex items-center gap-2 min-h-[44px] px-5 rounded-full border border-primary/25 bg-primary/5 backdrop-blur-sm text-xs sm:text-sm text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
+        >
+          <span className="sm:hidden">{t("roles.skip.short")}</span>
+          <span className="hidden sm:inline">{t("roles.skip")}</span>
+          <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform duration-300" />
+        </button>
+      </motion.div>
+
       {/* ══════════ HERO ══════════ */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 lg:pt-28 pb-16 sm:pb-20 text-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[800px] h-[300px] sm:h-[600px] rounded-full bg-primary/5 blur-[100px] sm:blur-[150px] pointer-events-none" />
@@ -298,24 +316,6 @@ const Landing = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Skip registration */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="text-center mt-10"
-        >
-          <button
-            type="button"
-            onClick={() => { window.scrollTo(0, 0); navigate("/login"); }}
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300 min-h-[44px] px-4 group"
-          >
-            <span className="underline underline-offset-4 decoration-border group-hover:decoration-primary/50">{t("roles.skip")}</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-          </button>
-        </motion.div>
       </RevealSection>
 
       {/* ── Footer ── */}

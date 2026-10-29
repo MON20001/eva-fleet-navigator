@@ -298,24 +298,6 @@ const Landing = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Skip registration */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="text-center mt-10"
-        >
-          <button
-            type="button"
-            onClick={() => { window.scrollTo(0, 0); navigate("/login"); }}
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300 min-h-[44px] px-4 group"
-          >
-            <span className="underline underline-offset-4 decoration-border group-hover:decoration-primary/50">{t("roles.skip")}</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-          </button>
-        </motion.div>
       </RevealSection>
 
       {/* ── Footer ── */}

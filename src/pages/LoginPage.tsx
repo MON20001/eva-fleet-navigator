@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Mail, Lock, UserIcon, Eye, EyeOff, CheckCircle, Loader2 } from "lucide-react";
+import { ArrowRight, Mail, Lock, UserIcon, Eye, EyeOff, CheckCircle, Loader2, Bus, Truck, ShieldCheck, HardHat, Zap } from "lucide-react";
 import evaLogo from "@/assets/eva-logo.png";
 import ParticleField from "@/components/ParticleField";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -23,8 +23,15 @@ const roleRoutes: Record<string, string> = {
   admin: "/admin",
 };
 
+const roleOptions: { role: UserRole; labelKey: "role.worker" | "role.bus" | "role.truck" | "role.admin"; icon: typeof Bus }[] = [
+  { role: "worker", labelKey: "role.worker", icon: HardHat },
+  { role: "bus-driver", labelKey: "role.bus", icon: Bus },
+  { role: "truck-driver", labelKey: "role.truck", icon: Truck },
+  { role: "admin", labelKey: "role.admin", icon: ShieldCheck },
+];
+
 const LoginPage = () => {
-  const { pendingRole, login } = useAuth();
+  const { pendingRole, setPendingRole, login } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
@@ -37,12 +44,13 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  if (!pendingRole) {
-    return <Navigate to="/" replace />;
-  }
-
   // Workers, Bus Drivers, Truck Drivers can only sign in (not register)
   const canRegister = pendingRole === "admin";
+
+  const quickLogin = (role: UserRole) => {
+    login(t(roleLabelKeys[role]), `demo.${role}@eva-transport.com`, role);
+    navigate(roleRoutes[role]);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -206,7 +214,7 @@ const LoginPage = () => {
 
           <div className="w-10 h-0.5 bg-primary mt-3 mb-8" />
 
-          {/* Role badge */}
+          {/* Role badge / Role picker */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -214,13 +222,44 @@ const LoginPage = () => {
             className="mb-8"
           >
             <p className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2">{t("login.role")}</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/5" style={{ boxShadow: "0 0 20px hsl(var(--glow-primary))" }}>
-              <div className="w-2 h-2 rounded-full bg-primary animate-glow-pulse" />
-              <span className="text-sm font-medium text-primary">{t(roleLabelKeys[pendingRole])}</span>
-            </div>
+            {pendingRole ? (
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/5" style={{ boxShadow: "0 0 20px hsl(var(--glow-primary))" }}>
+                  <div className="w-2 h-2 rounded-full bg-primary animate-glow-pulse" />
+                  <span className="text-sm font-medium text-primary">{t(roleLabelKeys[pendingRole])}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPendingRole(null)}
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-4 min-h-[44px] px-2"
+                >
+                  {t("login.change.role")}
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="text-sm text-muted-foreground mb-4">{t("login.select.role")}</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {roleOptions.map(({ role, labelKey, icon: Icon }) => (
+                    <motion.button
+                      key={role}
+                      type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => setPendingRole(role)}
+                      className="flex items-center gap-3 px-4 py-3.5 rounded-xl border border-border bg-card/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 text-start min-h-[56px]"
+                    >
+                      <Icon className="w-5 h-5 text-primary shrink-0" />
+                      <span className="text-sm font-medium">{t(labelKey)}</span>
+                    </motion.button>
+                  ))}
+                </div>
+              </>
+            )}
           </motion.div>
 
           {/* Animated form */}
+          {pendingRole && (
           <AnimatePresence mode="wait">
             <motion.form
               key={isRegister ? "register-form" : "login-form"}
@@ -337,6 +376,35 @@ const LoginPage = () => {
               </motion.button>
             </motion.form>
           </AnimatePresence>
+          )}
+
+          {/* Quick login shortcuts */}
+          <div className="mt-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px flex-1 bg-border" />
+              <span className="text-xs tracking-[0.15em] uppercase text-muted-foreground flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                {t("login.quick")}
+              </span>
+              <div className="h-px flex-1 bg-border" />
+            </div>
+            <p className="text-xs text-muted-foreground/70 mb-4 text-center">{t("login.quick.desc")}</p>
+            <div className="grid grid-cols-2 gap-2.5">
+              {roleOptions.map(({ role, labelKey, icon: Icon }) => (
+                <motion.button
+                  key={role}
+                  type="button"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => quickLogin(role)}
+                  className="flex items-center justify-center gap-2 px-3 py-3 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 min-h-[48px]"
+                >
+                  <Icon className="w-4 h-4 text-primary shrink-0" />
+                  <span className="text-xs font-medium">{t(labelKey)}</span>
+                </motion.button>
+              ))}
+            </div>
+          </div>
 
           {canRegister && (
             <div className="mt-8">

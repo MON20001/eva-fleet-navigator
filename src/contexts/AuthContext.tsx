@@ -12,8 +12,8 @@ interface User {
 interface AuthContextType {
   user: User | null;
   pendingRole: UserRole | null;
-  setPendingRole: (role: UserRole) => void;
-  login: (name: string, email: string) => void;
+  setPendingRole: (role: UserRole | null) => void;
+  login: (name: string, email: string, role?: UserRole) => void;
   logout: () => void;
 }
 
@@ -35,12 +35,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [user]);
 
-  const login = (name: string, _email: string) => {
-    if (!pendingRole) return;
+  const login = (name: string, _email: string, role?: UserRole) => {
+    const resolvedRole = role ?? pendingRole;
+    if (!resolvedRole) return;
     setUser({
       id: crypto.randomUUID(),
       name,
-      role: pendingRole,
+      role: resolvedRole,
     });
     setPendingRole(null);
   };

@@ -78,6 +78,12 @@ const translations = {
   "login.visual.desc": { en: "Managing the world's finest fleet operations with precision, reliability, and uncompromising standards of service.", ar: "إدارة أرقى عمليات الأساطيل في العالم بدقة وموثوقية ومعايير خدمة لا تقبل المساومة." },
   "login.visual.footer": { en: "© 2026 EVA Transportation Group", ar: "© 2026 EVA Transportation Group" },
   "login.forgot": { en: "Forgot Password?", ar: "نسيت كلمة المرور؟" },
+  "login.select.role": { en: "Select your role to continue", ar: "اختر دورك للمتابعة" },
+  "login.change.role": { en: "Change", ar: "تغيير" },
+  "login.quick": { en: "Quick Login", ar: "دخول سريع" },
+  "login.quick.desc": { en: "Jump straight into a dashboard — no credentials needed", ar: "ادخل مباشرة إلى لوحة التحكم — بدون بيانات اعتماد" },
+  "login.quick.as": { en: "Continue as", ar: "الدخول كـ" },
+  "login.or": { en: "or sign in with your account", ar: "أو سجل الدخول بحسابك" },
 
   // ── Role Introduction ──
   "intro.skip": { en: "Skip to Login →", ar: "تخطي إلى الدخول ←" },

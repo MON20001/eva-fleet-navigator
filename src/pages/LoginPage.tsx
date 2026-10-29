@@ -44,12 +44,13 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  if (!pendingRole) {
-    return <Navigate to="/" replace />;
-  }
-
   // Workers, Bus Drivers, Truck Drivers can only sign in (not register)
   const canRegister = pendingRole === "admin";
+
+  const quickLogin = (role: UserRole) => {
+    login(t(roleLabelKeys[role]), `demo.${role}@eva-transport.com`, role);
+    navigate(roleRoutes[role]);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -376,6 +376,35 @@ const LoginPage = () => {
               </motion.button>
             </motion.form>
           </AnimatePresence>
+          )}
+
+          {/* Quick login shortcuts */}
+          <div className="mt-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px flex-1 bg-border" />
+              <span className="text-xs tracking-[0.15em] uppercase text-muted-foreground flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                {t("login.quick")}
+              </span>
+              <div className="h-px flex-1 bg-border" />
+            </div>
+            <p className="text-xs text-muted-foreground/70 mb-4 text-center">{t("login.quick.desc")}</p>
+            <div className="grid grid-cols-2 gap-2.5">
+              {roleOptions.map(({ role, labelKey, icon: Icon }) => (
+                <motion.button
+                  key={role}
+                  type="button"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => quickLogin(role)}
+                  className="flex items-center justify-center gap-2 px-3 py-3 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 min-h-[48px]"
+                >
+                  <Icon className="w-4 h-4 text-primary shrink-0" />
+                  <span className="text-xs font-medium">{t(labelKey)}</span>
+                </motion.button>
+              ))}
+            </div>
+          </div>
 
           {canRegister && (
             <div className="mt-8">

@@ -259,6 +259,7 @@ const LoginPage = () => {
           </motion.div>
 
           {/* Animated form */}
+          {pendingRole && (
           <AnimatePresence mode="wait">
             <motion.form
               key={isRegister ? "register-form" : "login-form"}

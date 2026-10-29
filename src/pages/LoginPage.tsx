@@ -214,7 +214,7 @@ const LoginPage = () => {
 
           <div className="w-10 h-0.5 bg-primary mt-3 mb-8" />
 
-          {/* Role badge */}
+          {/* Role badge / Role picker */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -222,10 +222,40 @@ const LoginPage = () => {
             className="mb-8"
           >
             <p className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2">{t("login.role")}</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/5" style={{ boxShadow: "0 0 20px hsl(var(--glow-primary))" }}>
-              <div className="w-2 h-2 rounded-full bg-primary animate-glow-pulse" />
-              <span className="text-sm font-medium text-primary">{t(roleLabelKeys[pendingRole])}</span>
-            </div>
+            {pendingRole ? (
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/5" style={{ boxShadow: "0 0 20px hsl(var(--glow-primary))" }}>
+                  <div className="w-2 h-2 rounded-full bg-primary animate-glow-pulse" />
+                  <span className="text-sm font-medium text-primary">{t(roleLabelKeys[pendingRole])}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPendingRole(null)}
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-4 min-h-[44px] px-2"
+                >
+                  {t("login.change.role")}
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="text-sm text-muted-foreground mb-4">{t("login.select.role")}</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {roleOptions.map(({ role, labelKey, icon: Icon }) => (
+                    <motion.button
+                      key={role}
+                      type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => setPendingRole(role)}
+                      className="flex items-center gap-3 px-4 py-3.5 rounded-xl border border-border bg-card/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 text-start min-h-[56px]"
+                    >
+                      <Icon className="w-5 h-5 text-primary shrink-0" />
+                      <span className="text-sm font-medium">{t(labelKey)}</span>
+                    </motion.button>
+                  ))}
+                </div>
+              </>
+            )}
           </motion.div>
 
           {/* Animated form */}

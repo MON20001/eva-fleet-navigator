@@ -49,6 +49,7 @@ const translations = {
   "role.admin": { en: "Supervisor", ar: "مشرف" },
   "role.admin.desc": { en: "Full system control & analytics", ar: "التحكم الكامل بالنظام والتحليلات" },
   "role.enter": { en: "Enter", ar: "دخول" },
+  "roles.skip": { en: "Skip registration — go straight to login", ar: "تخطي التسجيل — الانتقال مباشرة إلى تسجيل الدخول" },
 
   // ── Login Page ──
   "login.welcome": { en: "Welcome back", ar: "مرحباً بعودتك" },

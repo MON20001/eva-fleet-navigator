@@ -1,6 +1,6 @@
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Bus, Truck, User, Shield, ArrowRight, MapPin, Bell, BarChart3, Route, Zap, ChevronDown } from "lucide-react";
@@ -58,7 +58,7 @@ const featureRouteMap: Record<string, string> = {
 };
 
 const Landing = () => {
-  const { setPendingRole } = useAuth();
+  const { setPendingRole, user } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
 
@@ -118,6 +118,16 @@ const Landing = () => {
             <div className="pulse-dot" />
             <span className="text-xs text-muted-foreground">{t("system.online")}</span>
           </div>
+          {user && (
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard")}
+              className="inline-flex items-center gap-2 min-h-[44px] px-4 rounded-full border border-primary/30 bg-primary/10 text-xs sm:text-sm font-semibold text-primary hover:bg-primary/20 hover:border-primary/50 transition-all duration-300"
+            >
+              {t("nav.dashboard")}
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          )}
           <LanguageSwitcher />
           <ThemeToggle />
         </motion.div>
@@ -332,18 +342,8 @@ const Landing = () => {
 };
 
 const Index = () => {
-  const { user } = useAuth();
-
-  if (user) {
-    const roleRoutes: Record<UserRole, string> = {
-      worker: "/worker",
-      "bus-driver": "/bus-driver",
-      "truck-driver": "/truck-driver",
-      admin: "/admin",
-    };
-    return <Navigate to={roleRoutes[user.role]} replace />;
-  }
-
+  // Always show the landing page — never auto-redirect to a dashboard,
+  // so opening the site link (published URL) lands here first.
   return <Landing />;
 };
 

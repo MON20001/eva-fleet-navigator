@@ -11,10 +11,9 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    const saved = localStorage.getItem("eva-theme");
-    return (saved === "light" ? "light" : "dark") as Theme;
-  });
+  // Always open in dark mode — the site starts dark for every visitor.
+  // The toggle still switches to light during the session.
+  const [theme, setThemeState] = useState<Theme>("dark");
 
   const setTheme = useCallback((t: Theme) => {
     setThemeState(t);
